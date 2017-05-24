@@ -1,5 +1,6 @@
 package top.defaults.kotlinoverflow.activity.common
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -13,10 +14,12 @@ class BaseFragment : Fragment(), BaseView {
 
     lateinit var activityResultManager: ActivityResultManager
     private var lifeCycle: BehaviorSubject<Int> = BehaviorSubject.createDefault(LIFE_CYCLE_EVENT_INIT)
+    private lateinit var progressDialog : ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityResultManager = ActivityResultManager(fragment = this)
+        progressDialog = ProgressDialog(activity)
     }
 
     override fun startActivityForObservable(intent: Intent): Observable<ActivityResult> {
@@ -30,5 +33,10 @@ class BaseFragment : Fragment(), BaseView {
     override fun onDestroyView() {
         lifeCycle.onNext(LIFE_CYCLE_EVENT_DESTROY)
         super.onDestroyView()
+    }
+
+
+    override fun getProgressDialog(): ProgressDialog {
+        return progressDialog
     }
 }

@@ -1,5 +1,6 @@
 package top.defaults.kotlinoverflow.activity.common
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -15,10 +16,12 @@ open class BaseActivity : AppCompatActivity(), BaseView {
 
     lateinit var activityResultManager: ActivityResultManager
     private var lifeCycle: BehaviorSubject<Int> = BehaviorSubject.createDefault(LIFE_CYCLE_EVENT_INIT)
+    private lateinit var progressDialog : ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityResultManager = ActivityResultManager(activity = this)
+        progressDialog = ProgressDialog(this)
     }
 
     override fun onPause() {
@@ -51,5 +54,9 @@ open class BaseActivity : AppCompatActivity(), BaseView {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         activityResultManager.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun getProgressDialog(): ProgressDialog {
+        return progressDialog
     }
 }

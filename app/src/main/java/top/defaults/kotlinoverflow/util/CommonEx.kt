@@ -61,3 +61,9 @@ fun <T> Observable<T>.android(view: BaseView? = null): Observable<T> {
     }
     return observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
 }
+
+fun <T> Observable<T>.showProgressDialog(view: BaseView, message: CharSequence? = "正在加载..."): Observable<T> {
+    return doOnLifecycle({ view.showProgressDialog(message) }, { view.dismissProgressDialog() })
+            .doOnComplete({ view.dismissProgressDialog() })
+            .doOnError({ view.dismissProgressDialog() })
+}

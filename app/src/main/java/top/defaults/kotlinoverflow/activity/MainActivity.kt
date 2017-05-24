@@ -30,6 +30,7 @@ class MainActivity : BaseActivity() {
             Http.create(Users::class.java)
                     .users()
                     .android(this)
+                    .showProgressDialog(this)
                     .subscribe({
                         responseText.text = App.prettyGson.toJson(it)
                     }, {
@@ -89,6 +90,7 @@ class MainActivity : BaseActivity() {
         Http.create(Users::class.java)
                 .me()
                 .android(this)
+                .showProgressDialog(this)
                 .subscribe({
                     responseText.text = App.prettyGson.toJson(it)
                     if (!it.items.isEmpty()) {
