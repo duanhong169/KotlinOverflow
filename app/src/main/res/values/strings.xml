@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">KotlinOverflow</string>
+    <string name="login">登录</string>
+</resources>
