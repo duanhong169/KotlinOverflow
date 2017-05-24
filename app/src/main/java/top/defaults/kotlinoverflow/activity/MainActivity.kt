@@ -10,7 +10,7 @@ import top.defaults.kotlinoverflow.App
 import top.defaults.kotlinoverflow.App.Companion.getUser
 import top.defaults.kotlinoverflow.BuildConfig
 import top.defaults.kotlinoverflow.R
-import top.defaults.kotlinoverflow.RetrofitClient
+import top.defaults.kotlinoverflow.Http
 import top.defaults.kotlinoverflow.activity.common.BaseActivity
 import top.defaults.kotlinoverflow.activity.common.WebViewActivity
 import top.defaults.kotlinoverflow.api.Users
@@ -27,8 +27,7 @@ class MainActivity : BaseActivity() {
         responseText = findViewById(R.id.response) as TextView
         responseText.movementMethod = ScrollingMovementMethod()
         responseText.setOnClickListener {
-            RetrofitClient.client
-                    .create(Users::class.java)
+            Http.create(Users::class.java)
                     .users()
                     .android(this)
                     .subscribe({
@@ -87,8 +86,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun getUserInfo() {
-        RetrofitClient.tokenClient
-                .create(Users::class.java)
+        Http.create(Users::class.java)
                 .me()
                 .android(this)
                 .subscribe({

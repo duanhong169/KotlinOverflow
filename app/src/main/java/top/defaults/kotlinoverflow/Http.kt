@@ -4,22 +4,15 @@ import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import top.defaults.kotlinoverflow.util.AccessToken
 import okhttp3.logging.HttpLoggingInterceptor
 
-object RetrofitClient {
+object Http {
     val client: Retrofit by lazy {
         Retrofit.Builder()
                 .baseUrl("https://api.stackexchange.com/2.2/")
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-    }
-
-    val tokenClient: Retrofit by lazy {
-        client.newBuilder()
-                .client(tokenOkHttpClient)
                 .build()
     }
 
@@ -51,15 +44,8 @@ object RetrofitClient {
             return _okHttpClient!!
         }
 
-    val tokenOkHttpClient: OkHttpClient
-        get() {
-            return okHttpClient.newBuilder().addInterceptor({ chain ->
-                var request = chain!!.request()
-                val url = request.url().newBuilder()
-                        .addQueryParameter("access_token", AccessToken.value)
-                        .build()
-                request = request.newBuilder().url(url).build()
-                chain.proceed(request)
-            }).build()
-        }
+    fun <T> create(api: Class<T>): T {
+        return client.create(api)
+    }
+
 }
