@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.BehaviorSubject
 import top.defaults.kotlinoverflow.App
 import top.defaults.kotlinoverflow.activity.common.BaseView
 
@@ -63,7 +64,12 @@ fun <T> Observable<T>.android(view: BaseView? = null): Observable<T> {
 }
 
 fun <T> Observable<T>.showProgressDialog(view: BaseView, message: CharSequence? = "正在加载..."): Observable<T> {
-    return doOnLifecycle({ view.showProgressDialog(message) }, { view.dismissProgressDialog() })
-            .doOnComplete({ view.dismissProgressDialog() })
+    val dismissObservable = BehaviorSubject.create<Unit>()
+    return doOnLifecycle({
+        view.showProgressDialog(message).setOnCancelListener { dismissObservable.onNext(Unit) }
+    }, {
+        view.dismissProgressDialog()
+    }).doOnComplete({ view.dismissProgressDialog() })
             .doOnError({ view.dismissProgressDialog() })
+            .takeUntil(dismissObservable)
 }

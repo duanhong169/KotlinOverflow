@@ -15,7 +15,7 @@ open class BaseActivity : AppCompatActivity(), BaseView {
     private var LIFE_CYCLE_EVENT_INIT = 0
 
     lateinit var activityResultManager: ActivityResultManager
-    private var lifeCycle: BehaviorSubject<Int> = BehaviorSubject.createDefault(LIFE_CYCLE_EVENT_INIT)
+    private var lifeCycle = BehaviorSubject.createDefault<Int>(LIFE_CYCLE_EVENT_INIT)
     private lateinit var progressDialog : ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
