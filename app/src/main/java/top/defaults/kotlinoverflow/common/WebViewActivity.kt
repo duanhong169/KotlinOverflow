@@ -1,4 +1,4 @@
-package top.defaults.kotlinoverflow.activity.common
+package top.defaults.kotlinoverflow.common
 
 import android.content.Context
 import android.os.Bundle

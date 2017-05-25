@@ -1,4 +1,4 @@
-package top.defaults.kotlinoverflow.activity.common
+package top.defaults.kotlinoverflow.common
 
 import java.util.concurrent.atomic.AtomicInteger
 import android.util.SparseArray

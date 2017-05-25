@@ -1,4 +1,4 @@
-package top.defaults.kotlinoverflow.activity.common
+package top.defaults.kotlinoverflow.common
 
 import android.app.ProgressDialog
 import android.content.Intent
@@ -8,7 +8,7 @@ import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import top.defaults.kotlinoverflow.model.ActivityResult
 
-class BaseFragment : Fragment(), BaseView {
+abstract class BaseFragment : Fragment(), BaseView {
     private var LIFE_CYCLE_EVENT_DESTROY = -1
     private var LIFE_CYCLE_EVENT_INIT = 0
 

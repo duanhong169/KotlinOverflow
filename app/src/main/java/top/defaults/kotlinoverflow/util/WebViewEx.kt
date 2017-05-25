@@ -7,7 +7,8 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ProgressBar
-import top.defaults.kotlinoverflow.activity.common.BaseActivity
+import top.defaults.kotlinoverflow.`object`.AccessToken
+import top.defaults.kotlinoverflow.common.BaseActivity
 import java.net.URL
 import java.net.URLDecoder
 

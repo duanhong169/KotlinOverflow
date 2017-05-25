@@ -1,6 +1,9 @@
-package top.defaults.kotlinoverflow.util
+package top.defaults.kotlinoverflow.`object`
 
 import top.defaults.kotlinoverflow.App
+import top.defaults.kotlinoverflow.util.PREFS_KEY_ACCESS_TOKEN
+import top.defaults.kotlinoverflow.util.isEmpty
+import top.defaults.kotlinoverflow.util.put
 
 object AccessToken {
     private var _value: String? = ""

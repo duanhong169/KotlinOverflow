@@ -1,30 +1,24 @@
 package top.defaults.kotlinoverflow.util
 
 import android.content.SharedPreferences
+import android.widget.Toast
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
+import okhttp3.HttpUrl
 import top.defaults.kotlinoverflow.App
-import top.defaults.kotlinoverflow.activity.common.BaseView
+import top.defaults.kotlinoverflow.common.BaseView
 
 val PREFS_KEY_ACCESS_TOKEN = "access_token"
 val PREFS_KEY_USER = "user"
 
-fun <E> List<E>?.length(): Int {
-    return this?.size?:0
-}
-
 fun <E> List<E>?.isEmpty(): Boolean {
-    return this.length() == 0
-}
-
-fun String?.length(): Int {
-    return this?.length?:0
+    return this?.size == 0
 }
 
 fun String?.isEmpty(): Boolean {
-    return this.length() == 0
+    return this?.length == 0
 }
 
 inline fun SharedPreferences.edit(func: SharedPreferences.Editor.() -> Unit) {
@@ -72,4 +66,15 @@ fun <T> Observable<T>.showProgressDialog(view: BaseView, message: CharSequence? 
     }).doOnComplete({ view.dismissProgressDialog() })
             .doOnError({ view.dismissProgressDialog() })
             .takeUntil(dismissObservable)
+}
+
+fun HttpUrl.Builder.addQueryParameterIfAbsent(key: String, value: String?): HttpUrl.Builder {
+    if (!build().queryParameterNames().contains(key)) {
+        addQueryParameter(key, value)
+    }
+    return this
+}
+
+fun toast(message: CharSequence?) {
+    Toast.makeText(App.appContext, message, Toast.LENGTH_SHORT).show()
 }

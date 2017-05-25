@@ -1,0 +1,14 @@
+<resources>
+    <style name="TextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/text</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextAppearance.Small">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextAppearance.Small.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>

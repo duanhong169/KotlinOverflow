@@ -2,41 +2,28 @@ package top.defaults.kotlinoverflow.activity
 
 import android.net.Uri
 import android.os.Bundle
-import android.text.method.ScrollingMovementMethod
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
 import top.defaults.kotlinoverflow.App
 import top.defaults.kotlinoverflow.App.Companion.getUser
 import top.defaults.kotlinoverflow.BuildConfig
 import top.defaults.kotlinoverflow.R
-import top.defaults.kotlinoverflow.Http
-import top.defaults.kotlinoverflow.activity.common.BaseActivity
-import top.defaults.kotlinoverflow.activity.common.WebViewActivity
+import top.defaults.kotlinoverflow.`object`.Http
+import top.defaults.kotlinoverflow.`object`.AccessToken
+import top.defaults.kotlinoverflow.common.BaseActivity
+import top.defaults.kotlinoverflow.common.WebViewActivity
 import top.defaults.kotlinoverflow.api.Users
+import top.defaults.kotlinoverflow.fragment.UsersFragment
 import top.defaults.kotlinoverflow.util.*
 
 class MainActivity : BaseActivity() {
 
-    lateinit var responseText: TextView
     lateinit var loginItem: MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        responseText = findViewById(R.id.response) as TextView
-        responseText.movementMethod = ScrollingMovementMethod()
-        responseText.setOnClickListener {
-            Http.create(Users::class.java)
-                    .users()
-                    .android(this)
-                    .showProgressDialog(this)
-                    .subscribe({
-                        responseText.text = App.prettyGson.toJson(it)
-                    }, {
-                        logE(it.toString())
-                    })
-        }
+        supportFragmentManager.beginTransaction().replace(R.id.container, UsersFragment()).commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -92,12 +79,11 @@ class MainActivity : BaseActivity() {
                 .android(this)
                 .showProgressDialog(this)
                 .subscribe({
-                    responseText.text = App.prettyGson.toJson(it)
                     if (!it.items.isEmpty()) {
                         App.login(it.items!![0]!!)
                     }
                 }, {
-                    logE(it.toString())
+                    toast(it.toString())
                 })
     }
 }
