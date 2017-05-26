@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/avatar"
         android:layout_marginLeft="8dp"
+        android:textAppearance="@style/TextAppearance.Blue.Light"
         tools:text="Hong Duan"/>
 
     <TextView
@@ -28,7 +29,7 @@
         android:layout_toRightOf="@id/avatar"
         android:layout_below="@id/name"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="6dp"
         android:textAppearance="@style/TextAppearance.Small.Bold"
         tools:text="1079"/>
 
@@ -38,8 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/avatar"
         android:layout_below="@id/reputation"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:background="@color/so_gold"/>
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="6dp"/>
 
 </RelativeLayout>

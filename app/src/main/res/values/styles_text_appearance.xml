@@ -11,4 +11,12 @@
     <style name="TextAppearance.Small.Bold">
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="TextAppearance.Blue">
+        <item name="android:textColor">@color/text_blue</item>
+    </style>
+
+    <style name="TextAppearance.Blue.Light">
+        <item name="android:textColor">@color/text_blue_light</item>
+    </style>
 </resources>
