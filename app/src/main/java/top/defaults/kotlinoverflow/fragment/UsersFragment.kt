@@ -1,8 +1,8 @@
 package top.defaults.kotlinoverflow.fragment
 
 import android.os.Bundle
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +13,12 @@ import top.defaults.kotlinoverflow.api.Users
 import top.defaults.kotlinoverflow.common.BaseFragment
 import top.defaults.kotlinoverflow.common.listener.OnItemClickListener
 import top.defaults.kotlinoverflow.util.*
+import top.defaults.kotlinoverflow.view.ManagedRecyclerView
 
 class UsersFragment : BaseFragment() {
-    lateinit var adapter: UserAdapter
     val paging = Paging()
+    lateinit var adapter: UserAdapter
+    lateinit var managedRecyclerView: ManagedRecyclerView
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater!!.inflate(R.layout.fragment_users, container, false)
@@ -24,7 +26,8 @@ class UsersFragment : BaseFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val recyclerView = view?.findViewById(R.id.recyclerView) as RecyclerView
+        managedRecyclerView = view?.findViewById(R.id.managedRecyclerView) as ManagedRecyclerView
+        val recyclerView = managedRecyclerView.recyclerView
         recyclerView.layoutManager = GridLayoutManager(context, 2)
         adapter = UserAdapter()
         adapter.onItemClickListener = object : OnItemClickListener {
@@ -33,15 +36,18 @@ class UsersFragment : BaseFragment() {
             }
         }
         recyclerView.adapter = adapter
+        managedRecyclerView.onRefreshListener = SwipeRefreshLayout.OnRefreshListener { load() }
         load()
     }
 
     private fun load() {
+        managedRecyclerView.setRefreshing(true)
         Http.create(Users::class.java)
                 .users(paging.page)
                 .android(this)
                 .showProgressDialog(this)
                 .subscribe({
+                    managedRecyclerView.setRefreshing(false)
                     if (it.items != null) {
                         adapter.append(it.items)
                         adapter.notifyDataSetChanged()
@@ -50,6 +56,7 @@ class UsersFragment : BaseFragment() {
                         }
                     }
                 }, {
+                    managedRecyclerView.setRefreshing(false)
                     toast(it.toString())
                 })
     }

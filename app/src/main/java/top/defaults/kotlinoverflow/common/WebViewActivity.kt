@@ -25,8 +25,8 @@ class WebViewActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_web_view)
-        progressBar = findViewById(R.id.progress_bar) as ProgressBar
-        webView = findViewById(R.id.web_view) as WebView
+        progressBar = findViewById(R.id.progressBar) as ProgressBar
+        webView = findViewById(R.id.webView) as WebView
         webView.configure(progressBar)
         val uri = intent.getStringExtra(EXTRA_URI)
         webView.loadUrl(uri)

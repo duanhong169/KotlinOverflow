@@ -32,7 +32,8 @@ class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 
     val textBounds = Rect()
     val badgeBounds = RectF()
 
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+    constructor(context: Context): this(context, null)
+    constructor(context: Context, attrs: AttributeSet?): this(context, attrs, 0)
 
     init {
         badgeSize = context.pixelOfDp(6f)
