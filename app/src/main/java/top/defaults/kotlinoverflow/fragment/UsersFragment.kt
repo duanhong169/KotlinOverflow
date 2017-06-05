@@ -14,6 +14,7 @@ import top.defaults.kotlinoverflow.common.BaseFragment
 import top.defaults.kotlinoverflow.common.listener.OnItemClickListener
 import top.defaults.kotlinoverflow.util.*
 import top.defaults.kotlinoverflow.view.ManagedRecyclerView
+import kotlinx.android.synthetic.main.fragment_users.*
 
 class UsersFragment : BaseFragment() {
     val paging = Paging()
@@ -26,7 +27,7 @@ class UsersFragment : BaseFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        managedRecyclerView = view?.findViewById(R.id.managedRecyclerView) as ManagedRecyclerView
+        managedRecyclerView = activity.managedRecyclerView
         val recyclerView = managedRecyclerView.recyclerView
         recyclerView.layoutManager = GridLayoutManager(context, 2)
         adapter = UserAdapter()

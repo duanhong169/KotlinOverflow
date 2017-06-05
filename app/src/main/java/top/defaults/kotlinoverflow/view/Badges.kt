@@ -15,8 +15,8 @@ import top.defaults.kotlinoverflow.util.pixelOfSp
 class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr) {
 
     private var badgeSize = 0
-    private var badgePadding = 0
     private var badgeWidth = 0
+    private var padding = 0
     private var maxLines = 0
     private var gold = 0
     private var silver = 0
@@ -28,6 +28,8 @@ class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 
     private var goldTextWidth = 0
     private var silverTextWidth = 0
     private var bronzeTextWidth = 0
+    private var textHeight = 0
+    private var lineHeight = 0
 
     val textBounds = Rect()
     val badgeBounds = RectF()
@@ -37,8 +39,8 @@ class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 
 
     init {
         badgeSize = context.pixelOfDp(6f)
-        badgePadding = context.pixelOfDp(4f)
-        badgeWidth = badgeSize + 2 * badgePadding
+        padding = context.pixelOfDp(4f)
+        badgeWidth = badgeSize + 2 * padding
         val a = context.theme.obtainStyledAttributes(attrs, R.styleable.Badges, 0 , 0)
         try {
             maxLines = a.getInt(R.styleable.Badges_maxLines, 1)
@@ -73,35 +75,49 @@ class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
+        val maxW = MeasureSpec.getSize(widthMeasureSpec)
+
+        textPaint.getTextBounds("0", 0, 1, textBounds)
+        textHeight = textBounds.bottom - textBounds.top
+        lineHeight = Math.max(textHeight, badgeSize) + padding
+
         var minW = 0
+        var minH = lineHeight
         if (gold > 0) {
             minW += badgeWidth
             val goldString = gold.toString()
             textPaint.getTextBounds(goldString, 0, goldString.length, textBounds)
             goldTextWidth = textBounds.right - textBounds.left
-            minW += goldTextWidth + badgePadding
+            minW += goldTextWidth + padding
         }
         if (silver > 0) {
             minW += badgeWidth
             val silverString = silver.toString()
             textPaint.getTextBounds(silverString, 0, silverString.length, textBounds)
             silverTextWidth = textBounds.right - textBounds.left
-            minW += silverTextWidth + badgePadding
+            val silverTextWidthWithPadding = silverTextWidth + padding
+            if (minW + silverTextWidthWithPadding > maxW) {
+                minW = Math.max(minW, silverTextWidthWithPadding)
+                minH += lineHeight
+            } else {
+                minW += silverTextWidthWithPadding
+            }
         }
         if (bronze > 0) {
             minW += badgeWidth
             val bronzeString = bronze.toString()
             textPaint.getTextBounds(bronzeString, 0, bronzeString.length, textBounds)
             bronzeTextWidth = textBounds.right - textBounds.left
-            minW += bronzeTextWidth
+            val bronzeTextWidthWithPadding = bronzeTextWidth + padding
+            if (minW + bronzeTextWidthWithPadding > maxW) {
+                minW = Math.max(minW, bronzeTextWidthWithPadding)
+                minH += lineHeight
+            } else {
+                minW += bronzeTextWidthWithPadding
+            }
         }
-        if (minW > 0) minW += badgePadding
 
         val w = resolveSizeAndState(minW, widthMeasureSpec, 1)
-
-        textPaint.getTextBounds("0", 0, 1, textBounds)
-        val minH = Math.max(textBounds.bottom - textBounds.top, badgeSize) + 2 * badgePadding
-
         val h = resolveSizeAndState(minH, heightMeasureSpec, 1)
         setMeasuredDimension(w, h)
     }
@@ -109,30 +125,45 @@ class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        val h = measuredHeight
+        val w = measuredWidth
         var x = 0f
+        var y = 0f
         if (gold > 0) {
-            canvas?.drawOval(getBadgeBounds(h, x), goldPaint)
+            canvas?.drawOval(getBadgeBounds(x, y), goldPaint)
             x += badgeWidth
-            canvas?.drawText(gold.toString(), x, textPaint.textSize, textPaint)
-            x += goldTextWidth + badgePadding
+            drawText(canvas, gold.toString(), x, y)
+            x += goldTextWidth + padding
         }
         if (silver > 0) {
-            canvas?.drawOval(getBadgeBounds(h, x), silverPaint)
+            if (x + badgeWidth + silverTextWidth + padding > w) {
+                x = 0f
+                y += textHeight + padding
+            }
+
+            canvas?.drawOval(getBadgeBounds(x, y), silverPaint)
             x += badgeWidth
-            canvas?.drawText(silver.toString(), x, textPaint.textSize, textPaint)
-            x += silverTextWidth + badgePadding
+            drawText(canvas, silver.toString(), x, y)
+            x += silverTextWidth + padding
         }
         if (bronze > 0) {
-            canvas?.drawOval(getBadgeBounds(h, x), bronzePaint)
+            if (x + badgeWidth + bronzeTextWidth + padding > w) {
+                x = 0f
+                y += textHeight + padding
+            }
+
+            canvas?.drawOval(getBadgeBounds(x, y), bronzePaint)
             x += badgeWidth
-            canvas?.drawText(bronze.toString(), x, textPaint.textSize, textPaint)
+            drawText(canvas, bronze.toString(), x, y)
         }
     }
 
-    fun getBadgeBounds(h: Int, offset: Float): RectF {
-        badgeBounds.set(badgePadding.toFloat(), ((h - badgeSize) / 2).toFloat(), (badgePadding + badgeSize).toFloat(), ((h + badgeSize) / 2).toFloat())
-        badgeBounds.offset(offset, 0f)
+    fun getBadgeBounds(x: Float, y: Float): RectF {
+        badgeBounds.set(padding.toFloat(), ((lineHeight - badgeSize) / 2).toFloat(), (padding + badgeSize).toFloat(), ((lineHeight + badgeSize) / 2).toFloat())
+        badgeBounds.offset(x, y)
         return badgeBounds
+    }
+
+    fun drawText(canvas: Canvas?, text: String, x: Float, y: Float) {
+        canvas?.drawText(text, x, y + textPaint.textSize - 2, textPaint)
     }
 }

@@ -20,6 +20,7 @@
         android:layout_toRightOf="@id/avatar"
         android:layout_marginLeft="8dp"
         android:textAppearance="@style/TextAppearance.Blue.Light"
+        style="@style/SingleLineTextView"
         tools:text="Hong Duan"/>
 
     <TextView

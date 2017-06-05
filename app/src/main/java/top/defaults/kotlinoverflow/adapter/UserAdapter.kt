@@ -7,6 +7,7 @@ import com.squareup.picasso.Picasso
 import top.defaults.kotlinoverflow.R
 import top.defaults.kotlinoverflow.model.User
 import top.defaults.kotlinoverflow.view.Badges
+import kotlinx.android.synthetic.main.item_user_brief.view.*
 
 class UserAdapter : BaseRecyclerViewAdapter<User>() {
     override fun getItemLayout(viewType: Int): Int {
@@ -19,10 +20,10 @@ class UserAdapter : BaseRecyclerViewAdapter<User>() {
 
     inner class UserHolder(itemView: View) : BaseRecyclerViewAdapter<User>.ViewHolder(itemView) {
 
-        private var avatar: ImageView? = findViewById(R.id.avatar) as ImageView?
-        private var name: TextView? = findViewById(R.id.name) as TextView?
-        private var reputation: TextView? = findViewById(R.id.reputation) as TextView?
-        private var badges: Badges? = findViewById(R.id.badges) as Badges?
+        private var avatar: ImageView? = itemView.avatar
+        private var name: TextView? = itemView.name
+        private var reputation: TextView? = itemView.reputation
+        private var badges: Badges? = itemView.badges
 
         override fun bind(data: User) {
             Picasso.with(itemView.context).load(data.profileImage).into(avatar)

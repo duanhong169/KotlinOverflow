@@ -10,9 +10,7 @@ import top.defaults.kotlinoverflow.util.DEF_PAGE_SIZE
 interface Users {
 
     @GET("me")
-    fun me(@Query("access_token") accessToken: String = AccessToken.value,
-           @Query("order") order: String = "desc",
-           @Query("sort") sort: String = "reputation"): Observable<UserList>
+    fun me(@Query("access_token") accessToken: String = AccessToken.value): Observable<UserList>
 
     @GET("users")
     fun users(@Query("page") page: Int,
