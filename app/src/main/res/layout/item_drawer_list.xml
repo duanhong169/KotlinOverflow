@@ -7,4 +7,4 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:gravity="center_vertical"
-    android:textAppearance="@style/TextAppearance.Bold"/>
+    android:textAppearance="@style/TextAppearance.Bold.Light1"/>
