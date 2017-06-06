@@ -4,6 +4,10 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="TextAppearance.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="TextAppearance.Small">
         <item name="android:textSize">12sp</item>
     </style>

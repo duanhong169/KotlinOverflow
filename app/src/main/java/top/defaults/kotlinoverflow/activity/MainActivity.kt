@@ -1,9 +1,12 @@
 package top.defaults.kotlinoverflow.activity
 
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
+import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ArrayAdapter
 import top.defaults.kotlinoverflow.App
 import top.defaults.kotlinoverflow.App.Companion.getUser
 import top.defaults.kotlinoverflow.BuildConfig
@@ -15,15 +18,44 @@ import top.defaults.kotlinoverflow.common.WebViewActivity
 import top.defaults.kotlinoverflow.api.Users
 import top.defaults.kotlinoverflow.fragment.UsersFragment
 import top.defaults.kotlinoverflow.util.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
 
     lateinit var loginItem: MenuItem
+    private var questionSortTypes: HashMap<String, String> = HashMap()
+    lateinit var drawerToggle: ActionBarDrawerToggle
+
+    init {
+        questionSortTypes.put("Activity", "activity")
+        questionSortTypes.put("Votes", "votes")
+        questionSortTypes.put("Creation", "creation")
+        questionSortTypes.put("Hot Today", "hot")
+        questionSortTypes.put("Hot Weekly", "week")
+        questionSortTypes.put("Hot Monthly", "month")
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportFragmentManager.beginTransaction().replace(R.id.container, UsersFragment()).commit()
+        drawerList.adapter = ArrayAdapter<String>(this, R.layout.item_drawer_list, R.id.title, questionSortTypes.keys.toList())
+        setSupportActionBar(toolbar)
+
+        drawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_open, R.string.drawer_close)
+        drawerLayout.addDrawerListener(drawerToggle)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setHomeButtonEnabled(true)
+    }
+
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
+        drawerToggle.syncState()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        drawerToggle.onConfigurationChanged(newConfig)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -40,6 +72,10 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true
+        }
+
         when (item?.itemId) {
             R.id.login -> loginOrLogout()
         }
