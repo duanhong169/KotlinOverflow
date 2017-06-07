@@ -2,7 +2,9 @@ package top.defaults.kotlinoverflow.util
 
 val DEF_PAGE_SIZE = 30
 
-class Paging(var page: Int = 1, val pageSize: Int = DEF_PAGE_SIZE) {
+data class Paging(var page: Int = 1, val pageSize: Int = DEF_PAGE_SIZE) {
+
+    var hasNext: Boolean = true
 
     fun inc() {
         page++
@@ -10,5 +12,6 @@ class Paging(var page: Int = 1, val pageSize: Int = DEF_PAGE_SIZE) {
 
     fun reset() {
         page = 1
+        hasNext = true
     }
 }

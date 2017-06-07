@@ -3,4 +3,9 @@
     <string name="login">LOG IN</string>
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
+    <string name="click_to_load_more">点击加载更多</string>
+    <string name="pull_to_load_more">上拉加载更多</string>
+    <string name="loading_more">正在加载更多</string>
+    <string name="loading_failed">加载失败，点击重试</string>
+    <string name="no_more">已经到底了</string>
 </resources>

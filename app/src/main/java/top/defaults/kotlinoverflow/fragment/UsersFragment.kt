@@ -17,7 +17,6 @@ import top.defaults.kotlinoverflow.view.ManagedRecyclerView
 import kotlinx.android.synthetic.main.fragment_users.*
 
 class UsersFragment : BaseFragment() {
-    val paging = Paging()
     lateinit var adapter: UserAdapter
     lateinit var managedRecyclerView: ManagedRecyclerView
 
@@ -32,32 +31,47 @@ class UsersFragment : BaseFragment() {
         recyclerView.layoutManager = GridLayoutManager(context, 2)
         adapter = UserAdapter()
         adapter.onItemClickListener = object : OnItemClickListener {
-            override fun onItemClick(v: View, position: Int) {
-                load()
-            }
+            override fun onItemClick(v: View, position: Int) {}
         }
         recyclerView.adapter = adapter
-        managedRecyclerView.onRefreshListener = SwipeRefreshLayout.OnRefreshListener { load() }
-        load()
+        managedRecyclerView.onRefreshListener = SwipeRefreshLayout.OnRefreshListener { load(false) }
+        managedRecyclerView.enableLoadingFooterTextView()
+        managedRecyclerView.onLoadMoreListener = object : ManagedRecyclerView.OnLoadMoreListener {
+            override fun onLoadMore() {
+                load(true)
+            }
+
+        }
+        load(false)
     }
 
-    private fun load() {
-        managedRecyclerView.setRefreshing(true)
+    private fun load(append: Boolean) {
+        val currentPageIndex = managedRecyclerView.paging.page
+        if (!append) {
+            managedRecyclerView.paging.reset()
+        }
+        managedRecyclerView.setStatus(ManagedRecyclerView.Status.LOADING)
         Http.create(Users::class.java)
-                .users(paging.page)
+                .users(managedRecyclerView.paging.page)
                 .android(this)
-                .showProgressDialog(this)
                 .subscribe({
-                    managedRecyclerView.setRefreshing(false)
+                    managedRecyclerView.setStatus(ManagedRecyclerView.Status.NORMAL)
+                    if (!append) {
+                        adapter.clear()
+                    }
                     if (it.items != null) {
                         adapter.append(it.items)
-                        adapter.notifyDataSetChanged()
                         if (!it.items.isEmpty()) {
-                            paging.inc()
+                            managedRecyclerView.paging.inc()
                         }
+                    } else {
+                        managedRecyclerView.setStatus(ManagedRecyclerView.Status.NO_MORE)
+                        managedRecyclerView.paging.hasNext = false
                     }
+                    adapter.notifyDataSetChanged()
                 }, {
-                    managedRecyclerView.setRefreshing(false)
+                    managedRecyclerView.setStatus(ManagedRecyclerView.Status.ERROR)
+                    managedRecyclerView.paging.page = currentPageIndex
                     toast(it.toString())
                 })
     }
