@@ -49,7 +49,7 @@ class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 
         }
         textPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         textPaint.textSize = context.pixelOfSp(12f).toFloat()
-        textPaint.color = context.getColorCompat(R.color.text_light)
+        textPaint.color = context.getColorCompat(R.color.text_light_1)
 
         goldPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         goldPaint.style = Paint.Style.FILL

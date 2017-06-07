@@ -30,8 +30,19 @@
     <color name="blue_dark_3">#1565C0</color>
     <color name="blue_dark_4">#0D47A1</color>
 
+    <color name="red_light_5">#FFEBEE</color>
+    <color name="red_light_4">#FFCDD2</color>
+    <color name="red_light_3">#EF9A9A</color>
+    <color name="red_light_2">#E57373</color>
+    <color name="red_light_1">#EF5350</color>
+    <color name="red">#F44336</color>
+    <color name="red_dark_1">#E53935</color>
+    <color name="red_dark_2">#D32F2F</color>
+    <color name="red_dark_3">#C62828</color>
+    <color name="red_dark_4">#B71C1C</color>
+
     <color name="text">@color/gray_dark_3</color>
-    <color name="text_light">@color/gray_dark_1</color>
+    <color name="text_light_1">@color/gray_dark_1</color>
     <color name="text_blue">@color/blue_dark_3</color>
     <color name="text_blue_light">@color/blue_dark_1</color>
 </resources>

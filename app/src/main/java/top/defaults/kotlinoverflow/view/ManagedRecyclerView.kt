@@ -1,6 +1,10 @@
 package top.defaults.kotlinoverflow.view
 
+import android.animation.ArgbEvaluator
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -20,6 +24,15 @@ class ManagedRecyclerView(context: Context, attrs: AttributeSet? = null, defStyl
     var recyclerView: RecyclerView
     var swipeRefreshLayout: SwipeRefreshLayout
     var onRefreshListener: SwipeRefreshLayout.OnRefreshListener? = null
+    val colorAnimator: ObjectAnimator by lazy {
+        val animator = ObjectAnimator.ofInt(loadingFooter!!, "textColor", ContextCompat.getColor(context, R.color.colorPrimary), ContextCompat.getColor(context, R.color.colorAccent))
+        animator.setEvaluator(ArgbEvaluator())
+        animator.target = loadingFooter
+        animator.duration = 500
+        animator.repeatMode = ValueAnimator.REVERSE
+        animator.repeatCount = ValueAnimator.INFINITE
+        animator
+    }
 
     val paging = Paging()
 
@@ -116,7 +129,14 @@ class ManagedRecyclerView(context: Context, attrs: AttributeSet? = null, defStyl
         } else {
             swipeRefreshLayout.isRefreshing = false
         }
+
         loadingFooter?.let { loadingFooter ->
+            if (status == Status.LOADING) {
+                colorAnimator.start()
+            } else {
+                colorAnimator.cancel()
+                loadingFooter.setTextColor(ContextCompat.getColor(context, R.color.text_light_1))
+            }
             loadingFooter.visibility = View.VISIBLE
             loadingFooter.setOnClickListener(null)
             when (status) {
@@ -128,6 +148,7 @@ class ManagedRecyclerView(context: Context, attrs: AttributeSet? = null, defStyl
                 }
                 Status.ERROR -> {
                     loadingFooter.setText(R.string.loading_failed)
+                    loadingFooter.setTextColor(ContextCompat.getColor(context, R.color.red))
                     loadingFooter.setOnClickListener({ notifyLoadMore() })
                 }
                 Status.DISMISS -> getExtendedAdapter().removeFooter()
