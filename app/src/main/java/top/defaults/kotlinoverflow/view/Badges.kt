@@ -7,10 +7,10 @@ import android.graphics.Rect
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
+import org.jetbrains.anko.dip
+import org.jetbrains.anko.sp
 import top.defaults.kotlinoverflow.R
 import top.defaults.kotlinoverflow.util.getColorCompat
-import top.defaults.kotlinoverflow.util.pixelOfDp
-import top.defaults.kotlinoverflow.util.pixelOfSp
 
 class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr) {
 
@@ -31,15 +31,15 @@ class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 
     private var textHeight = 0
     private var lineHeight = 0
 
-    val textBounds = Rect()
-    val badgeBounds = RectF()
+    private val textBounds = Rect()
+    private val badgeBounds = RectF()
 
     constructor(context: Context): this(context, null)
     constructor(context: Context, attrs: AttributeSet?): this(context, attrs, 0)
 
     init {
-        badgeSize = context.pixelOfDp(6f)
-        padding = context.pixelOfDp(4f)
+        badgeSize = context.dip(6f)
+        padding = context.dip(4f)
         badgeWidth = badgeSize + 2 * padding
         val a = context.theme.obtainStyledAttributes(attrs, R.styleable.Badges, 0 , 0)
         try {
@@ -48,7 +48,7 @@ class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 
             a.recycle()
         }
         textPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-        textPaint.textSize = context.pixelOfSp(12f).toFloat()
+        textPaint.textSize = context.sp(12).toFloat()
         textPaint.color = context.getColorCompat(R.color.text_light_1)
 
         goldPaint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -117,8 +117,8 @@ class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 
             }
         }
 
-        val w = resolveSizeAndState(minW, widthMeasureSpec, 1)
-        val h = resolveSizeAndState(minH, heightMeasureSpec, 1)
+        val w = resolveSizeAndState(minW, widthMeasureSpec, 0)
+        val h = resolveSizeAndState(minH, heightMeasureSpec, 0)
         setMeasuredDimension(w, h)
     }
 
@@ -127,7 +127,7 @@ class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 
 
         val w = measuredWidth
         var x = 0f
-        var y = 0f
+        var y = context.dip(2).toFloat()
         if (gold > 0) {
             canvas?.drawOval(getBadgeBounds(x, y), goldPaint)
             x += badgeWidth

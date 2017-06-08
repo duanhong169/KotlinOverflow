@@ -18,9 +18,9 @@ import top.defaults.kotlinoverflow.`object`.AccessToken
 import top.defaults.kotlinoverflow.common.BaseActivity
 import top.defaults.kotlinoverflow.common.WebViewActivity
 import top.defaults.kotlinoverflow.api.Users
-import top.defaults.kotlinoverflow.fragment.UsersFragment
 import top.defaults.kotlinoverflow.util.*
 import kotlinx.android.synthetic.main.activity_main.*
+import top.defaults.kotlinoverflow.fragment.QuestionsFragment
 
 class MainActivity : BaseActivity() {
 
@@ -30,9 +30,9 @@ class MainActivity : BaseActivity() {
     private var selectedPosition: Int = 0
 
     init {
-        questionSortTypes.put("Activity", "activity")
+        questionSortTypes.put("Active", "activity")
         questionSortTypes.put("Votes", "votes")
-        questionSortTypes.put("Creation", "creation")
+        questionSortTypes.put("Newest", "creation")
         questionSortTypes.put("Hot Today", "hot")
         questionSortTypes.put("Hot Weekly", "week")
         questionSortTypes.put("Hot Monthly", "month")
@@ -41,7 +41,7 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        supportFragmentManager.beginTransaction().replace(R.id.container, UsersFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.container, QuestionsFragment()).commit()
         drawerList.adapter = ArrayAdapter<String>(this, R.layout.item_drawer_list, R.id.title, questionSortTypes.keys.toList())
         drawerList.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             drawerLayout.closeDrawers()

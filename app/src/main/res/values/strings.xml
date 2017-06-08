@@ -3,9 +3,15 @@
     <string name="login">LOG IN</string>
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
-    <string name="click_to_load_more">点击加载更多</string>
-    <string name="pull_to_load_more">上拉加载更多</string>
-    <string name="loading_more">正在加载更多</string>
-    <string name="loading_failed">加载失败，点击重试</string>
-    <string name="no_more">已经到底了</string>
+    <string name="click_to_load_more">Click to load more</string>
+    <string name="pull_to_load_more">Pull up to load more</string>
+    <string name="loading_more">Loading more…</string>
+    <string name="loading_failed">Loading failed, please retry</string>
+    <string name="no_more">No more items</string>
+    <string name="vote">vote</string>
+    <string name="vote_plural">votes</string>
+    <string name="answer">answer</string>
+    <string name="answer_plural">answers</string>
+    <string name="view">view</string>
+    <string name="view_plural">views</string>
 </resources>

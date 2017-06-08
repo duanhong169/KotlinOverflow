@@ -52,6 +52,6 @@ class UsersFragment : RecyclerViewFragment<User, UserList>() {
             }
             managedRecyclerView.paging.hasMore = it.hasMore ?: false
             adapter.notifyDataSetChanged()
-        })
+        }, {})
     }
 }

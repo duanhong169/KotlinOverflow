@@ -14,7 +14,7 @@ data class Question(
 	val lastActivityDate: Int? = null,
 
 	@field:SerializedName("owner")
-	val shallowUser: ShallowUser? = null,
+	val owner: ShallowUser? = null,
 
 	@field:SerializedName("is_answered")
 	val isAnswered: Boolean? = null,

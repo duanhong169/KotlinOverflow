@@ -52,6 +52,6 @@ class QuestionsFragment : RecyclerViewFragment<Question, QuestionList>() {
             }
             managedRecyclerView.paging.hasMore = it.hasMore ?: false
             adapter.notifyDataSetChanged()
-        })
+        }, {})
     }
 }

@@ -20,16 +20,16 @@ class UserAdapter : BaseRecyclerViewAdapter<User>() {
 
     inner class UserHolder(itemView: View) : BaseRecyclerViewAdapter<User>.ViewHolder(itemView) {
 
-        private var avatar: ImageView? = itemView.avatar
-        private var name: TextView? = itemView.name
-        private var reputation: TextView? = itemView.reputation
-        private var badges: Badges? = itemView.badges
+        private var avatar = itemView.avatar
+        private var name = itemView.name
+        private var reputation = itemView.reputation
+        private var badges = itemView.badges
 
         override fun bind(data: User) {
             Picasso.with(itemView.context).load(data.profileImage).into(avatar)
-            name?.text = data.displayName
-            reputation?.text = data.reputation.toString()
-            badges?.setBadges(data.badgeCounts?.gold?:0, data.badgeCounts?.silver?:0, data.badgeCounts?.bronze?:0)
+            name.text = data.displayName
+            reputation.text = data.reputation.toString()
+            badges.setBadges(data.badgeCounts?.gold?:0, data.badgeCounts?.silver?:0, data.badgeCounts?.bronze?:0)
         }
     }
 }

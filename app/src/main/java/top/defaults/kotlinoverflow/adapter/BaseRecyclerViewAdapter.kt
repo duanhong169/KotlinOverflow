@@ -1,5 +1,6 @@
 package top.defaults.kotlinoverflow.adapter
 
+import android.content.Context
 import android.support.annotation.IdRes
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -122,6 +123,11 @@ abstract class BaseRecyclerViewAdapter<T> : RecyclerView.Adapter<BaseRecyclerVie
         fun findViewById(@IdRes id: Int): View? {
             return itemView.findViewById(id)
         }
+
+        protected var context: Context? = null
+            get() {
+                return itemView.context
+            }
 
         abstract fun bind(data: T)
 
