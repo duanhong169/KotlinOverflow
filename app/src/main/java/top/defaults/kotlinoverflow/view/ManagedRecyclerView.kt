@@ -65,7 +65,7 @@ class ManagedRecyclerView(context: Context, attrs: AttributeSet? = null, defStyl
 
     private val autoLoadMoreOnScrollListener = object : RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            if (!paging.hasNext) {
+            if (!paging.hasMore) {
                 return
             }
 
@@ -144,7 +144,7 @@ class ManagedRecyclerView(context: Context, attrs: AttributeSet? = null, defStyl
                 Status.LOADING -> loadingFooter.setText(R.string.loading_more)
                 Status.NO_MORE -> {
                     loadingFooter.setText(R.string.no_more)
-                    paging.hasNext = false
+                    paging.hasMore = false
                 }
                 Status.ERROR -> {
                     loadingFooter.setText(R.string.loading_failed)
