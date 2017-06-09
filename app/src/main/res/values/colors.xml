@@ -43,8 +43,10 @@
 
     <color name="text">@color/gray_dark_3</color>
     <color name="text_light_1">@color/gray_dark_1</color>
+    <color name="text_light_2">@color/gray_light_1</color>
     <color name="text_blue">@color/blue_dark_3</color>
-    <color name="text_blue_light">@color/blue_dark_1</color>
+    <color name="text_blue_light_1">@color/blue_dark_1</color>
+    <color name="text_blue_light_2">@color/blue_light_1</color>
 
-    <color name="divider">@color/gray_light_1</color>
+    <color name="divider">@color/gray_light_2</color>
 </resources>

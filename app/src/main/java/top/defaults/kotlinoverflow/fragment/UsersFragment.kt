@@ -6,7 +6,6 @@ import io.reactivex.Observable
 import top.defaults.kotlinoverflow.`object`.Http
 import top.defaults.kotlinoverflow.adapter.UserAdapter
 import top.defaults.kotlinoverflow.api.Users
-import top.defaults.kotlinoverflow.util.*
 import top.defaults.kotlinoverflow.view.ManagedRecyclerView
 import top.defaults.kotlinoverflow.adapter.BaseRecyclerViewAdapter
 import top.defaults.kotlinoverflow.model.User
@@ -32,7 +31,6 @@ class UsersFragment : RecyclerViewFragment<User, UserList>() {
     override fun getObservable(): Observable<UserList> {
         return Http.create(Users::class.java)
                 .users(managedRecyclerView.paging.page)
-                .android(this)
     }
 
     override fun doWork(observable: Observable<UserList>, append: Boolean) {

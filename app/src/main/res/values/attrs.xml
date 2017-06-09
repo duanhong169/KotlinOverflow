@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="maxLines" format="integer"/>
+    <attr name="horizontalSpacing" format="dimension"/>
+
     <declare-styleable name="Badges">
-        <attr name="maxLines" format="integer"/>
+        <attr name="maxLines"/>
     </declare-styleable>
 
     <declare-styleable name="CountView">
         <attr name="text" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="FlowLayout">
+        <attr name="maxLines"/>
+        <attr name="maxViewCount" format="integer"/>
+        <attr name="horizontalSpacing"/>
+        <attr name="verticalSpacing" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="FlowLayout_Layout">
+        <attr name="breakLine" format="boolean"/>
+        <attr name="horizontalSpacing"/>
     </declare-styleable>
 </resources>

@@ -50,11 +50,12 @@ abstract class BaseRecyclerViewAdapter<T> : RecyclerView.Adapter<BaseRecyclerVie
     }
 
     fun getItem(position: Int): T? {
-        return list?.get(position)
+        if (position < getHeaderCount() || position >= getHeaderCount() + getDataSize()) throw IndexOutOfBoundsException()
+        return list?.get(getItemPosition(position))
     }
 
     override fun getItemCount(): Int {
-        return getHeaderCount() + (list?.size?:0) + getFooterCount()
+        return getHeaderCount() + getDataSize() + getFooterCount()
     }
 
     fun isItemFullSpan(position: Int): Boolean {
@@ -97,6 +98,10 @@ abstract class BaseRecyclerViewAdapter<T> : RecyclerView.Adapter<BaseRecyclerVie
 
     fun getFooterCount(): Int {
         return if (footerView != null) 1 else 0
+    }
+
+    fun getItemPosition(position: Int): Int {
+        return position - getHeaderCount()
     }
 
     override fun getItemViewType(position: Int): Int {

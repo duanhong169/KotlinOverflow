@@ -4,12 +4,24 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="TextAppearance.Bold">
-        <item name="android:textStyle">bold</item>
-    </style>
-
     <style name="TextAppearance.Light1">
         <item name="android:textColor">@color/text_light_1</item>
+    </style>
+
+    <style name="TextAppearance.Light2">
+        <item name="android:textColor">@color/text_light_2</item>
+    </style>
+
+    <style name="TextAppearance.Blue">
+        <item name="android:textColor">@color/text_blue</item>
+    </style>
+
+    <style name="TextAppearance.Blue.Light">
+        <item name="android:textColor">@color/text_blue_light_1</item>
+    </style>
+
+    <style name="TextAppearance.Bold">
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextAppearance.Bold.Light1">
@@ -24,11 +36,16 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="TextAppearance.Blue">
+    <style name="TextAppearance.Small.Light1">
+        <item name="android:textColor">@color/text_light_1</item>
+    </style>
+
+    <style name="TextAppearance.Small.Light2">
+        <item name="android:textColor">@color/text_light_2</item>
+    </style>
+
+    <style name="TextAppearance.Small.Blue">
         <item name="android:textColor">@color/text_blue</item>
     </style>
 
-    <style name="TextAppearance.Blue.Light">
-        <item name="android:textColor">@color/text_blue_light</item>
-    </style>
 </resources>

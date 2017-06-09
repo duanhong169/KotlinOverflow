@@ -93,7 +93,7 @@ fun Int.abbrev(): String {
             abbrevUnit = AbbrevUnit.M
             unitSuffix = "m"
         }
-        in AbbrevUnit.K.unit..AbbrevUnit.M.unit -> {
+        in 10000..AbbrevUnit.M.unit -> {
             abbrevUnit = AbbrevUnit.K
             unitSuffix = "k"
         }

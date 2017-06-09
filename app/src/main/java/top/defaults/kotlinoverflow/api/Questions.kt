@@ -14,5 +14,5 @@ interface Questions {
                   @Query("tagged") tagged: String = "kotlin",
                   @Query("order") order: String = "desc",
                   @Query("sort") sort: String = "activity",
-                  @Query("filter") filter: String = "!*K)GHyCvKRGs(Yyd"): Observable<QuestionList>
+                  @Query("filter") filter: String = "!6JW7LsM8VJgxM"): Observable<QuestionList>
 }

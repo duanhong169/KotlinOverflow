@@ -17,9 +17,9 @@ class CountView(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int
     private var count: String = "0"
     private var textPaint: Paint
     private val textBounds = Rect()
-    private var verticalMargin = context.dip(4)
-    private var textSize = context.sp(20).toFloat()
-    private var numberSize = context.sp(14).toFloat()
+    private var verticalMargin = context.dip(2)
+    private var textSize = context.sp(16).toFloat()
+    private var numberSize = context.sp(12).toFloat()
     private var numberHeight = 0
     private var numberWidth = 0
     private var textHeight = 0

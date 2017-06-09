@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.fragment_recycler_view.*
 import top.defaults.kotlinoverflow.R
 import top.defaults.kotlinoverflow.adapter.BaseRecyclerViewAdapter
 import top.defaults.kotlinoverflow.common.BaseFragment
-import top.defaults.kotlinoverflow.common.listener.OnItemClickListener
+import top.defaults.kotlinoverflow.util.android
 import top.defaults.kotlinoverflow.util.toast
 import top.defaults.kotlinoverflow.view.ManagedRecyclerView
 
@@ -33,9 +33,6 @@ abstract class RecyclerViewFragment<E, C> : BaseFragment() {
         recyclerView.layoutManager = getLayoutManager()
 
         val adapter = getAdapter()
-        adapter.onItemClickListener = object : OnItemClickListener {
-            override fun onItemClick(v: View, position: Int) {}
-        }
         recyclerView.adapter = adapter
         managedRecyclerView.onRefreshListener = SwipeRefreshLayout.OnRefreshListener { load(false) }
         managedRecyclerView.enableLoadingFooterTextView()
@@ -54,7 +51,9 @@ abstract class RecyclerViewFragment<E, C> : BaseFragment() {
             managedRecyclerView.paging.reset()
         }
         managedRecyclerView.setStatus(ManagedRecyclerView.Status.LOADING)
-        doWork(getObservable().doOnError {
+        doWork(getObservable()
+                .android(this)
+                .doOnError {
             managedRecyclerView.setStatus(ManagedRecyclerView.Status.ERROR)
             managedRecyclerView.paging.page = currentPageIndex
             toast(it.toString())

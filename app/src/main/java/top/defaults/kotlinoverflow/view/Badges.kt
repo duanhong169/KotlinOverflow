@@ -164,6 +164,6 @@ class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 
     }
 
     fun drawText(canvas: Canvas?, text: String, x: Float, y: Float) {
-        canvas?.drawText(text, x, y + textPaint.textSize - 3, textPaint)
+        canvas?.drawText(text, x, y + textPaint.textSize - context.sp(1), textPaint)
     }
 }
