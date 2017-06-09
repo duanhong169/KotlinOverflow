@@ -14,7 +14,7 @@ import top.defaults.kotlinoverflow.R
 class CountView(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr) {
 
     private var text: String? = "Null"
-    private var count: Int = 0
+    private var count: String = "0"
     private var textPaint: Paint
     private val textBounds = Rect()
     private var verticalMargin = context.dip(4)
@@ -40,7 +40,7 @@ class CountView(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int
         textPaint.color = context.getColorCompat(R.color.text_light_1)
     }
 
-    fun setCount(count: Int, text: String) {
+    fun setCount(count: String, text: String) {
         this.count = count
         this.text = text
         invalidate()
@@ -51,7 +51,7 @@ class CountView(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
         textPaint.textSize = textSize
-        textPaint.getTextBounds(count.toString(), 0, count.toString().length, textBounds)
+        textPaint.getTextBounds(count, 0, count.length, textBounds)
         numberHeight = (textPaint.textSize + 0.5).toInt()
         numberWidth = textBounds.right - textBounds.left
 

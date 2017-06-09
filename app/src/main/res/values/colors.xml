@@ -45,4 +45,6 @@
     <color name="text_light_1">@color/gray_dark_1</color>
     <color name="text_blue">@color/blue_dark_3</color>
     <color name="text_blue_light">@color/blue_dark_1</color>
+
+    <color name="divider">@color/gray_light_1</color>
 </resources>

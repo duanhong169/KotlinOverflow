@@ -44,6 +44,7 @@ abstract class RecyclerViewFragment<E, C> : BaseFragment() {
                 load(true)
             }
         }
+        onConfigure(managedRecyclerView)
         load(false)
     }
 
@@ -59,6 +60,8 @@ abstract class RecyclerViewFragment<E, C> : BaseFragment() {
             toast(it.toString())
         }, append)
     }
+
+    open fun onConfigure(recyclerView: ManagedRecyclerView) {}
 
     abstract fun getObservable(): Observable<C>
 

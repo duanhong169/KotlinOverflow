@@ -82,7 +82,7 @@ class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 
         lineHeight = Math.max(textHeight, badgeSize) + padding
 
         var minW = 0
-        var minH = lineHeight
+        var minH = padding + lineHeight
         if (gold > 0) {
             minW += badgeWidth
             val goldString = gold.toString()
@@ -127,7 +127,7 @@ class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 
 
         val w = measuredWidth
         var x = 0f
-        var y = context.dip(2).toFloat()
+        var y = (padding / 2).toFloat()
         if (gold > 0) {
             canvas?.drawOval(getBadgeBounds(x, y), goldPaint)
             x += badgeWidth
@@ -164,6 +164,6 @@ class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 
     }
 
     fun drawText(canvas: Canvas?, text: String, x: Float, y: Float) {
-        canvas?.drawText(text, x, y + textPaint.textSize - 2, textPaint)
+        canvas?.drawText(text, x, y + textPaint.textSize - 3, textPaint)
     }
 }

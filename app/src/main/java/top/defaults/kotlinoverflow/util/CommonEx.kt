@@ -9,6 +9,7 @@ import io.reactivex.subjects.BehaviorSubject
 import okhttp3.HttpUrl
 import top.defaults.kotlinoverflow.App
 import top.defaults.kotlinoverflow.common.BaseView
+import java.text.NumberFormat
 
 val PREFS_KEY_ACCESS_TOKEN = "access_token"
 val PREFS_KEY_USER = "user"
@@ -77,4 +78,34 @@ fun HttpUrl.Builder.addQueryParameterIfAbsent(key: String, value: String?): Http
 
 fun toast(message: CharSequence?) {
     Toast.makeText(App.appContext, message, Toast.LENGTH_SHORT).show()
+}
+
+enum class AbbrevUnit(val unit: Int) {
+    B(1), K(1000), M(1000000), G(1000000000)
+}
+
+fun Int.abbrev(): String {
+    val abbrevUnit: AbbrevUnit
+    val unitSuffix: String
+
+    when (this) {
+        in AbbrevUnit.M.unit..AbbrevUnit.G.unit -> {
+            abbrevUnit = AbbrevUnit.M
+            unitSuffix = "m"
+        }
+        in AbbrevUnit.K.unit..AbbrevUnit.M.unit -> {
+            abbrevUnit = AbbrevUnit.K
+            unitSuffix = "k"
+        }
+        else -> {
+            abbrevUnit = AbbrevUnit.B
+            unitSuffix = ""
+        }
+    }
+    val numberToDisplay = this.toFloat() / abbrevUnit.unit
+
+    val numberFormat = NumberFormat.getInstance()
+    numberFormat.isGroupingUsed = true
+    numberFormat.maximumFractionDigits = 1
+    return numberFormat.format(numberToDisplay) + unitSuffix
 }

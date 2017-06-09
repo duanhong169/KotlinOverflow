@@ -1,8 +1,11 @@
 package top.defaults.kotlinoverflow.fragment
 
+import android.support.v4.content.ContextCompat
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import io.reactivex.Observable
+import top.defaults.kotlinoverflow.R
 import top.defaults.kotlinoverflow.`object`.Http
 import top.defaults.kotlinoverflow.adapter.BaseRecyclerViewAdapter
 import top.defaults.kotlinoverflow.adapter.QuestionAdapter
@@ -27,6 +30,12 @@ class QuestionsFragment : RecyclerViewFragment<Question, QuestionList>() {
 
     override fun getLayoutManager(): RecyclerView.LayoutManager {
         return layoutManager
+    }
+
+    override fun onConfigure(recyclerView: ManagedRecyclerView) {
+        val itemDecoration = DividerItemDecoration(context, layoutManager.orientation)
+        itemDecoration.setDrawable(ContextCompat.getDrawable(context, R.drawable.divider_horizontal_1px))
+        recyclerView.recyclerView.addItemDecoration(itemDecoration)
     }
 
     override fun getObservable(): Observable<QuestionList> {

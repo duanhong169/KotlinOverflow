@@ -7,6 +7,7 @@ import com.squareup.picasso.Picasso
 import top.defaults.kotlinoverflow.R
 import top.defaults.kotlinoverflow.model.Question
 import kotlinx.android.synthetic.main.item_question_brief.view.*
+import top.defaults.kotlinoverflow.util.abbrev
 import java.util.*
 
 class QuestionAdapter : BaseRecyclerViewAdapter<Question>() {
@@ -34,15 +35,15 @@ class QuestionAdapter : BaseRecyclerViewAdapter<Question>() {
 
             context?.let { context ->
                 data.upVoteCount?.let { upVoteCount ->
-                    upVotes.setCount(upVoteCount, if (upVoteCount == 1) context.getString(R.string.vote) else context.getString(R.string.vote_plural))
+                    upVotes.setCount(upVoteCount.abbrev(), if (upVoteCount == 1) context.getString(R.string.vote) else context.getString(R.string.vote_plural))
                 }
 
                 data.answerCount?.let { answerCount ->
-                    answers.setCount(answerCount, if (answerCount == 1) context.getString(R.string.answer) else context.getString(R.string.answer_plural))
+                    answers.setCount(answerCount.abbrev(), if (answerCount == 1) context.getString(R.string.answer) else context.getString(R.string.answer_plural))
                 }
 
                 data.viewCount?.let { viewCount ->
-                    views.text = String.format(Locale.US, "%d %s", viewCount, if (viewCount == 1) context.getString(R.string.view) else context.getString(R.string.view_plural))
+                    views.text = String.format(Locale.US, "%s %s", viewCount.abbrev(), if (viewCount == 1) context.getString(R.string.view) else context.getString(R.string.view_plural))
                 }
             }
 
@@ -57,7 +58,7 @@ class QuestionAdapter : BaseRecyclerViewAdapter<Question>() {
             data.owner?.let { (profileImage, _, _, _, reputation1, badgeCounts, displayName) ->
                 Picasso.with(itemView.context).load(profileImage).into(avatar)
                 name.text = displayName
-                reputation.text = reputation1.toString()
+                reputation.text = reputation1?.abbrev()
                 badges.setBadges(badgeCounts?.gold?:0, badgeCounts?.silver?:0, badgeCounts?.bronze?:0)
             }
         }
