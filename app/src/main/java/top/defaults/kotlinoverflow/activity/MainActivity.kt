@@ -25,9 +25,9 @@ import top.defaults.kotlinoverflow.fragment.QuestionsFragment
 class MainActivity : BaseActivity() {
 
     lateinit var loginItem: MenuItem
-    private var questionSortTypes: HashMap<String, String> = LinkedHashMap()
+    private var questionSortTypes: LinkedHashMap<String, String> = LinkedHashMap()
     lateinit var drawerToggle: ActionBarDrawerToggle
-    private var selectedPosition: Int = 0
+    private var selectedPosition: Int = 1
 
     init {
         questionSortTypes.put("Active", "activity")
@@ -41,29 +41,31 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        supportFragmentManager.beginTransaction().replace(R.id.container, QuestionsFragment()).commit()
+        supportActionBar?.title = questionSortTypes.keys.toList()[selectedPosition]
+
         drawerList.adapter = ArrayAdapter<String>(this, R.layout.item_drawer_list, R.id.title, questionSortTypes.keys.toList())
         drawerList.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             drawerLayout.closeDrawers()
             selectedPosition = position
+            refresh()
         }
 
-        updateTitle()
+        refresh()
 
         drawerToggle = object : ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_open, R.string.drawer_close) {
             override fun onDrawerClosed(view: View) {
                 super.onDrawerClosed(view)
-                updateTitle()
+                supportActionBar?.title = questionSortTypes.keys.toList()[selectedPosition]
             }
 
             override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)
-                supportActionBar!!.title = "Choose a sort type"
+                supportActionBar?.title = "Choose a sort type"
             }
         }
         drawerLayout.addDrawerListener(drawerToggle)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(true)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -141,7 +143,12 @@ class MainActivity : BaseActivity() {
                 })
     }
 
-    private fun updateTitle() {
-        supportActionBar!!.title = drawerList.adapter.getItem(selectedPosition) as String
+    private fun refresh() {
+        val sortKey = drawerList.adapter.getItem(selectedPosition) as String
+        val fragment = QuestionsFragment()
+        val args = Bundle()
+        args.putString("sort", questionSortTypes[sortKey])
+        fragment.arguments = args
+        supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
     }
 }

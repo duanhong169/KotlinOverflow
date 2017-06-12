@@ -14,17 +14,15 @@ import top.defaults.kotlinoverflow.util.getColorCompat
 
 class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr) {
 
-    private var badgeSize = 0
+    private var badgeSize = context.dip(6)
     private var badgeWidth = 0
-    private var padding = 0
+    private var internalMargin = context.dip(4)
     private var maxLines = 0
     private var gold = 0
     private var silver = 0
     private var bronze = 0
     private var textPaint: Paint
-    private var goldPaint: Paint
-    private var silverPaint: Paint
-    private var bronzePaint: Paint
+    private var colorPaint: Paint
     private var goldTextWidth = 0
     private var silverTextWidth = 0
     private var bronzeTextWidth = 0
@@ -38,9 +36,7 @@ class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 
     constructor(context: Context, attrs: AttributeSet?): this(context, attrs, 0)
 
     init {
-        badgeSize = context.dip(6f)
-        padding = context.dip(4f)
-        badgeWidth = badgeSize + 2 * padding
+        badgeWidth = badgeSize + paddingLeft + paddingRight
         val a = context.theme.obtainStyledAttributes(attrs, R.styleable.Badges, 0 , 0)
         try {
             maxLines = a.getInt(R.styleable.Badges_maxLines, 1)
@@ -51,17 +47,8 @@ class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 
         textPaint.textSize = context.sp(12).toFloat()
         textPaint.color = context.getColorCompat(R.color.text_light_1)
 
-        goldPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-        goldPaint.style = Paint.Style.FILL
-        goldPaint.color = context.getColorCompat(R.color.so_gold)
-
-        silverPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-        silverPaint.style = Paint.Style.FILL
-        silverPaint.color = context.getColorCompat(R.color.so_silver)
-
-        bronzePaint = Paint(Paint.ANTI_ALIAS_FLAG)
-        bronzePaint.style = Paint.Style.FILL
-        bronzePaint.color = context.getColorCompat(R.color.so_bronze)
+        colorPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+        colorPaint.style = Paint.Style.FILL
     }
 
     fun setBadges(gold: Int, silver: Int, bronze: Int) {
@@ -78,24 +65,24 @@ class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 
         val maxW = MeasureSpec.getSize(widthMeasureSpec)
 
         textPaint.getTextBounds("0", 0, 1, textBounds)
-        textHeight = textBounds.bottom - textBounds.top
-        lineHeight = Math.max(textHeight, badgeSize) + padding
+        textHeight = (textPaint.textSize + 0.5).toInt()
+        lineHeight = Math.max(textHeight, badgeSize) + paddingTop + paddingBottom
 
         var minW = 0
-        var minH = padding + lineHeight
+        var minH = lineHeight
         if (gold > 0) {
             minW += badgeWidth
             val goldString = gold.toString()
             textPaint.getTextBounds(goldString, 0, goldString.length, textBounds)
             goldTextWidth = textBounds.right - textBounds.left
-            minW += goldTextWidth + padding
+            minW += goldTextWidth + internalMargin
         }
         if (silver > 0) {
             minW += badgeWidth
             val silverString = silver.toString()
             textPaint.getTextBounds(silverString, 0, silverString.length, textBounds)
             silverTextWidth = textBounds.right - textBounds.left
-            val silverTextWidthWithPadding = silverTextWidth + padding
+            val silverTextWidthWithPadding = silverTextWidth + internalMargin
             if (minW + silverTextWidthWithPadding > maxW) {
                 minW = Math.max(minW, silverTextWidthWithPadding)
                 minH += lineHeight
@@ -108,7 +95,7 @@ class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 
             val bronzeString = bronze.toString()
             textPaint.getTextBounds(bronzeString, 0, bronzeString.length, textBounds)
             bronzeTextWidth = textBounds.right - textBounds.left
-            val bronzeTextWidthWithPadding = bronzeTextWidth + padding
+            val bronzeTextWidthWithPadding = bronzeTextWidth + internalMargin
             if (minW + bronzeTextWidthWithPadding > maxW) {
                 minW = Math.max(minW, bronzeTextWidthWithPadding)
                 minH += lineHeight
@@ -127,43 +114,46 @@ class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 
 
         val w = measuredWidth
         var x = 0f
-        var y = (padding / 2).toFloat()
+        var y = 0f
         if (gold > 0) {
-            canvas?.drawOval(getBadgeBounds(x, y), goldPaint)
+            colorPaint.color = context.getColorCompat(R.color.so_gold)
+            canvas?.drawOval(getBadgeBounds(x, y), colorPaint)
             x += badgeWidth
             drawText(canvas, gold.toString(), x, y)
-            x += goldTextWidth + padding
+            x += goldTextWidth + internalMargin
         }
         if (silver > 0) {
-            if (x + badgeWidth + silverTextWidth + padding > w) {
+            if (x + badgeWidth + silverTextWidth + internalMargin > w) {
                 x = 0f
-                y += textHeight + padding
+                y += lineHeight
             }
 
-            canvas?.drawOval(getBadgeBounds(x, y), silverPaint)
+            colorPaint.color = context.getColorCompat(R.color.so_silver)
+            canvas?.drawOval(getBadgeBounds(x, y), colorPaint)
             x += badgeWidth
             drawText(canvas, silver.toString(), x, y)
-            x += silverTextWidth + padding
+            x += silverTextWidth + internalMargin
         }
         if (bronze > 0) {
-            if (x + badgeWidth + bronzeTextWidth + padding > w) {
+            if (x + badgeWidth + bronzeTextWidth + internalMargin > w) {
                 x = 0f
-                y += textHeight + padding
+                y += lineHeight
             }
 
-            canvas?.drawOval(getBadgeBounds(x, y), bronzePaint)
+            colorPaint.color = context.getColorCompat(R.color.so_bronze)
+            canvas?.drawOval(getBadgeBounds(x, y), colorPaint)
             x += badgeWidth
             drawText(canvas, bronze.toString(), x, y)
         }
     }
 
     fun getBadgeBounds(x: Float, y: Float): RectF {
-        badgeBounds.set(padding.toFloat(), ((lineHeight - badgeSize) / 2).toFloat(), (padding + badgeSize).toFloat(), ((lineHeight + badgeSize) / 2).toFloat())
+        badgeBounds.set(internalMargin.toFloat(), ((lineHeight - badgeSize) / 2).toFloat(), (internalMargin + badgeSize).toFloat(), ((lineHeight + badgeSize) / 2).toFloat())
         badgeBounds.offset(x, y)
         return badgeBounds
     }
 
     fun drawText(canvas: Canvas?, text: String, x: Float, y: Float) {
-        canvas?.drawText(text, x, y + textPaint.textSize - context.sp(1), textPaint)
+        canvas?.drawText(text, x, y + textPaint.textSize, textPaint)
     }
 }

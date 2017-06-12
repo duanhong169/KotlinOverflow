@@ -2,20 +2,23 @@ package top.defaults.kotlinoverflow.view
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.View
 import org.jetbrains.anko.dip
 import org.jetbrains.anko.sp
-import top.defaults.kotlinoverflow.util.getColorCompat
 import top.defaults.kotlinoverflow.R
+import top.defaults.kotlinoverflow.util.getColorCompat
 
 class CountView(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr) {
 
     private var text: String? = "Null"
     private var count: String = "0"
+    private var style: Style = Style.NORMAL
     private var textPaint: Paint
+    private var colorPaint: Paint
     private val textBounds = Rect()
     private var verticalMargin = context.dip(2)
     private var textSize = context.sp(16).toFloat()
@@ -37,12 +40,20 @@ class CountView(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int
         }
 
         textPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-        textPaint.color = context.getColorCompat(R.color.text_light_1)
+
+        colorPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+        colorPaint.color = context.getColorCompat(R.color.so_green)
+        colorPaint.strokeWidth = 1f
     }
 
-    fun setCount(count: String, text: String) {
+    enum class Style {
+        NORMAL, STROKE, FILL
+    }
+
+    fun setContent(count: String, text: String, style: Style = Style.NORMAL) {
         this.count = count
         this.text = text
+        this.style = style
         invalidate()
         requestLayout()
     }
@@ -60,8 +71,8 @@ class CountView(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int
         textHeight = (textPaint.textSize + 0.5).toInt()
         textWidth = textBounds.right - textBounds.left
 
-        val w = resolveSizeAndState(Math.max(textWidth, numberWidth), widthMeasureSpec, 0)
-        val h = resolveSizeAndState(numberHeight + verticalMargin + textHeight, heightMeasureSpec, 0)
+        val w = resolveSizeAndState(Math.max(textWidth, numberWidth) + paddingLeft + paddingRight, widthMeasureSpec, 0)
+        val h = resolveSizeAndState(numberHeight + verticalMargin + textHeight + paddingTop + paddingBottom, heightMeasureSpec, 0)
         setMeasuredDimension(w, h)
     }
 
@@ -69,11 +80,25 @@ class CountView(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int
         super.onDraw(canvas)
 
         val w = measuredWidth
-        var y = 0f
+        var y = paddingTop.toFloat()
 
         canvas?.let { canvas ->
+            when (style) {
+                Style.NORMAL -> textPaint.color = context.getColorCompat(R.color.text_light_1)
+                Style.STROKE -> {
+                    textPaint.color = context.getColorCompat(R.color.so_green)
+                    colorPaint.style = Paint.Style.STROKE
+                    canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), colorPaint)
+                }
+                Style.FILL -> {
+                    textPaint.color = Color.WHITE
+                    colorPaint.style = Paint.Style.FILL_AND_STROKE
+                    canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), colorPaint)
+                }
+            }
+
             textPaint.textSize = textSize
-            canvas.drawText(count.toString(), ((w - numberWidth) / 2).toFloat(), y + textPaint.textSize, textPaint)
+            canvas.drawText(count, ((w - numberWidth) / 2).toFloat(), y + textPaint.textSize, textPaint)
 
             y += numberHeight + verticalMargin
 

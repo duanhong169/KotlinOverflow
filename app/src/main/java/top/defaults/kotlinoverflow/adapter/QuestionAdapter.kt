@@ -9,8 +9,8 @@ import top.defaults.kotlinoverflow.util.abbrev
 import java.util.*
 import android.view.LayoutInflater
 import android.widget.TextView
-
-
+import top.defaults.kotlinoverflow.util.unescapeHtml
+import top.defaults.kotlinoverflow.view.CountView
 
 class QuestionAdapter : BaseRecyclerViewAdapter<Question>() {
     override fun getItemLayout(viewType: Int): Int {
@@ -37,11 +37,14 @@ class QuestionAdapter : BaseRecyclerViewAdapter<Question>() {
 
             context?.let { context ->
                 data.score?.let { score ->
-                    upVotes.setCount(score.abbrev(), if (score == 1) context.getString(R.string.vote) else context.getString(R.string.vote_plural))
+                    upVotes.setContent(score.abbrev(), if (score == 1) context.getString(R.string.vote) else context.getString(R.string.vote_plural))
                 }
 
                 data.answerCount?.let { answerCount ->
-                    answers.setCount(answerCount.abbrev(), if (answerCount == 1) context.getString(R.string.answer) else context.getString(R.string.answer_plural))
+                    var style = CountView.Style.NORMAL
+                    if (data.acceptedAnswerId?:0 > 0) style = CountView.Style.FILL
+                    else if (data.isAnswered?:false) style = CountView.Style.STROKE
+                    answers.setContent(answerCount.abbrev(), if (answerCount == 1) context.getString(R.string.answer) else context.getString(R.string.answer_plural), style)
                 }
 
                 data.viewCount?.let { viewCount ->
@@ -49,7 +52,7 @@ class QuestionAdapter : BaseRecyclerViewAdapter<Question>() {
                 }
             }
 
-            title.text = data.title
+            title.text = data.title?.unescapeHtml()
 
             tagsLayout.removeAllViews()
             data.tags?.let { tags ->
@@ -65,7 +68,7 @@ class QuestionAdapter : BaseRecyclerViewAdapter<Question>() {
             }
 
             data.owner?.let { (_, _, _, _, reputation1, badgeCounts, displayName) ->
-                name.text = displayName
+                name.text = displayName?.unescapeHtml()
                 reputation.text = reputation1?.abbrev()
                 badges.setBadges(badgeCounts?.gold?:0, badgeCounts?.silver?:0, badgeCounts?.bronze?:0)
             }

@@ -19,6 +19,9 @@ data class Question(
 	@field:SerializedName("is_answered")
 	val isAnswered: Boolean? = null,
 
+	@field:SerializedName("accepted_answer_id")
+	val acceptedAnswerId: Int? = null,
+
 	@field:SerializedName("creation_date")
 	val creationDate: Int? = null,
 

@@ -49,7 +49,7 @@ class QuestionsFragment : RecyclerViewFragment<Question, QuestionList>() {
 
     override fun getObservable(): Observable<QuestionList> {
         return Http.create(Questions::class.java)
-                .questions(managedRecyclerView.paging.page)
+                .questions(managedRecyclerView.paging.page, sort = arguments.getString("sort", "activity"))
     }
 
     override fun doWork(observable: Observable<QuestionList>, append: Boolean) {

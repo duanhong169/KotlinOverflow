@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp"
-    android:background="@android:color/white">
+    android:background="?android:attr/selectableItemBackground">
 
     <LinearLayout
         android:id="@+id/left_column"
@@ -18,19 +18,20 @@
         <top.defaults.kotlinoverflow.view.CountView
             android:id="@+id/upVotes"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:padding="6dp"/>
 
         <top.defaults.kotlinoverflow.view.CountView
             android:id="@+id/answers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"/>
+            android:padding="6dp"/>
 
         <TextView
             android:id="@+id/views"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="6dp"
             android:gravity="center_horizontal"
             android:textAppearance="@style/TextAppearance.Small"/>
     </LinearLayout>
@@ -53,7 +54,6 @@
         android:layout_toRightOf="@id/left_column"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
-        android:layout_centerVertical="true"
         app:maxLines="2"
         app:maxViewCount="8"
         app:horizontalSpacing="6dp"
@@ -62,8 +62,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tags"
+        android:layout_alignParentBottom="true"
         android:layout_toRightOf="@id/left_column"
+        android:layout_below="@id/tags"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:gravity="bottom">
@@ -79,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
-            android:textAppearance="@style/TextAppearance.Blue.Light"
+            android:textAppearance="@style/TextAppearance.Small.Blue.Light"
             style="@style/SingleLineTextView"
             tools:text="Hong Duan"/>
 
@@ -88,14 +89,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
-            android:textAppearance="@style/TextAppearance.Small.Bold"
+            android:textAppearance="@style/TextAppearance.Small"
             tools:text="1079"/>
 
         <top.defaults.kotlinoverflow.view.Badges
             android:id="@+id/badges"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"/>
+            android:layout_marginLeft="4dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"/>
 
     </LinearLayout>
 
