@@ -86,7 +86,7 @@ enum class AbbrevUnit(val unit: Int) {
     B(1), K(1000), M(1000000), G(1000000000)
 }
 
-fun Int.abbrev(): String {
+fun Int.reputationAbbrev(): String {
     val abbrevUnit: AbbrevUnit
     val unitSuffix: String
 
@@ -109,6 +109,33 @@ fun Int.abbrev(): String {
     val numberFormat = NumberFormat.getInstance()
     numberFormat.isGroupingUsed = true
     numberFormat.maximumFractionDigits = 1
+    return numberFormat.format(numberToDisplay) + unitSuffix
+}
+
+fun Int.viewCountAbbrev(): String {
+    val abbrevUnit: AbbrevUnit
+    val unitSuffix: String
+
+    when (this) {
+        in AbbrevUnit.M.unit..AbbrevUnit.G.unit -> {
+            abbrevUnit = AbbrevUnit.M
+            unitSuffix = "m"
+        }
+        in AbbrevUnit.K.unit..AbbrevUnit.M.unit -> {
+            abbrevUnit = AbbrevUnit.K
+            unitSuffix = "k"
+        }
+        else -> {
+            abbrevUnit = AbbrevUnit.B
+            unitSuffix = ""
+        }
+    }
+    val numberToDisplay = this.toFloat() / abbrevUnit.unit
+
+    val numberFormat = NumberFormat.getInstance()
+    numberFormat.isGroupingUsed = true
+    numberFormat.maximumFractionDigits = if (abbrevUnit.unit > AbbrevUnit.K.unit) 1 else 0
+    numberFormat.minimumFractionDigits = if (abbrevUnit.unit > AbbrevUnit.K.unit) 1 else 0
     return numberFormat.format(numberToDisplay) + unitSuffix
 }
 

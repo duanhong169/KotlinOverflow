@@ -5,11 +5,12 @@ import android.view.View
 import top.defaults.kotlinoverflow.R
 import top.defaults.kotlinoverflow.model.Question
 import kotlinx.android.synthetic.main.item_question_brief.view.*
-import top.defaults.kotlinoverflow.util.abbrev
+import top.defaults.kotlinoverflow.util.reputationAbbrev
 import java.util.*
 import android.view.LayoutInflater
 import android.widget.TextView
 import top.defaults.kotlinoverflow.util.unescapeHtml
+import top.defaults.kotlinoverflow.util.viewCountAbbrev
 import top.defaults.kotlinoverflow.view.CountView
 
 class QuestionAdapter : BaseRecyclerViewAdapter<Question>() {
@@ -37,18 +38,18 @@ class QuestionAdapter : BaseRecyclerViewAdapter<Question>() {
 
             context?.let { context ->
                 data.score?.let { score ->
-                    upVotes.setContent(score.abbrev(), if (score == 1) context.getString(R.string.vote) else context.getString(R.string.vote_plural))
+                    upVotes.setContent(score.toString(), if (score == 1) context.getString(R.string.vote) else context.getString(R.string.vote_plural))
                 }
 
                 data.answerCount?.let { answerCount ->
                     var style = CountView.Style.NORMAL
                     if (data.acceptedAnswerId?:0 > 0) style = CountView.Style.FILL
                     else if (data.isAnswered?:false) style = CountView.Style.STROKE
-                    answers.setContent(answerCount.abbrev(), if (answerCount == 1) context.getString(R.string.answer) else context.getString(R.string.answer_plural), style)
+                    answers.setContent(answerCount.toString(), if (answerCount == 1) context.getString(R.string.answer) else context.getString(R.string.answer_plural), style)
                 }
 
                 data.viewCount?.let { viewCount ->
-                    views.text = String.format(Locale.US, "%s %s", viewCount.abbrev(), if (viewCount == 1) context.getString(R.string.view) else context.getString(R.string.view_plural))
+                    views.text = String.format(Locale.US, "%s %s", viewCount.viewCountAbbrev(), if (viewCount == 1) context.getString(R.string.view) else context.getString(R.string.view_plural))
                 }
             }
 
@@ -69,7 +70,7 @@ class QuestionAdapter : BaseRecyclerViewAdapter<Question>() {
 
             data.owner?.let { (_, _, _, _, reputation1, badgeCounts, displayName) ->
                 name.text = displayName?.unescapeHtml()
-                reputation.text = reputation1?.abbrev()
+                reputation.text = reputation1?.reputationAbbrev()
                 badges.setBadges(badgeCounts?.gold?:0, badgeCounts?.silver?:0, badgeCounts?.bronze?:0)
             }
         }
