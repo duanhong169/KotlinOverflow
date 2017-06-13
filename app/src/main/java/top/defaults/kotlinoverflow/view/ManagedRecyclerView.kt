@@ -83,11 +83,7 @@ class ManagedRecyclerView(context: Context, attrs: AttributeSet? = null, defStyl
                 }
                 return
             }
-            var lastItem = firstVisibleItem + visibleItemCount
-            // check if the footer view is fully visible
-            if (loadingFooter!!.bottom > recyclerView.height) {
-                lastItem--
-            }
+            val lastItem = firstVisibleItem + visibleItemCount
             if (lastItem == totalItemCount && status !== Status.LOADING) {
                 notifyLoadMore()
             }
@@ -124,7 +120,7 @@ class ManagedRecyclerView(context: Context, attrs: AttributeSet? = null, defStyl
 
     fun setStatus(status: Status) {
         this.status = status
-        if (paging.page == 1) {
+        if (paging.page == 1 && !isLoadingFooterFullVisible()) {
             swipeRefreshLayout.isRefreshing = (status == Status.LOADING)
         } else {
             swipeRefreshLayout.isRefreshing = false
@@ -154,5 +150,13 @@ class ManagedRecyclerView(context: Context, attrs: AttributeSet? = null, defStyl
                 Status.DISMISS -> getExtendedAdapter().removeFooter()
             }
         }
+    }
+
+    fun isLoadingFooterFullVisible(): Boolean {
+        val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+        val lastVisibleItem = layoutManager.findLastCompletelyVisibleItemPosition()
+        val totalItemCount = getExtendedAdapter().getDataSize()
+        logD("lastVisibleItem %d, totalItemCount %d", lastVisibleItem, totalItemCount)
+        return lastVisibleItem == -1 || lastVisibleItem >= totalItemCount
     }
 }

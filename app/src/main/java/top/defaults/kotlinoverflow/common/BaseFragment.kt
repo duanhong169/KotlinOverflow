@@ -1,5 +1,6 @@
 package top.defaults.kotlinoverflow.common
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
@@ -16,10 +17,26 @@ abstract class BaseFragment : Fragment(), BaseView {
     private var lifeCycle: BehaviorSubject<Int> = BehaviorSubject.createDefault(LIFE_CYCLE_EVENT_INIT)
     private lateinit var progressDialog : ProgressDialog
 
+    override fun setTitle(titleId: Int) {
+        getHostActivity()?.setTitle(titleId)
+    }
+
+    override fun setTitle(title: CharSequence?) {
+        getHostActivity()?.title = title
+    }
+
+    override fun getTitle(): CharSequence? {
+        return getHostActivity()?.title
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityResultManager = ActivityResultManager(fragment = this)
         progressDialog = ProgressDialog(activity)
+    }
+
+    override fun startActivity(clazz: Class<out Activity>) {
+        startActivityForObservable(Intent(context, clazz))
     }
 
     override fun startActivityForObservable(intent: Intent): Observable<ActivityResult> {

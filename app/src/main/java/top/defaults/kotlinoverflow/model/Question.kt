@@ -10,10 +10,16 @@ data class Question(
 	@field:SerializedName("link")
 	val link: String? = null,
 
-	@field:SerializedName("last_activity_date")
+    @field:SerializedName("share_link")
+    val shareLink: String? = null,
+
+    @field:SerializedName("last_activity_date")
 	val lastActivityDate: Int? = null,
 
-	@field:SerializedName("owner")
+    @field:SerializedName("last_edit_date")
+    val lastEditDate: Int? = null,
+
+    @field:SerializedName("owner")
 	val owner: ShallowUser? = null,
 
 	@field:SerializedName("is_answered")
@@ -44,5 +50,14 @@ data class Question(
 	val viewCount: Int? = null,
 
 	@field:SerializedName("tags")
-	val tags: List<String?>? = null
+	val tags: List<String?>? = null,
+
+    @field:SerializedName("comment_count")
+    val commentCount: Int? = null,
+
+    @field:SerializedName("comments")
+    val comments: List<Comment?>? = null,
+
+    @field:SerializedName("answers")
+    val answers: List<Answer?>? = null
 )

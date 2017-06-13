@@ -1,5 +1,6 @@
 package top.defaults.kotlinoverflow.fragment
 
+import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -8,6 +9,7 @@ import android.view.View
 import io.reactivex.Observable
 import top.defaults.kotlinoverflow.R
 import top.defaults.kotlinoverflow.`object`.Http
+import top.defaults.kotlinoverflow.activity.BasicActivity
 import top.defaults.kotlinoverflow.adapter.BaseRecyclerViewAdapter
 import top.defaults.kotlinoverflow.adapter.QuestionAdapter
 import top.defaults.kotlinoverflow.api.Questions
@@ -23,7 +25,11 @@ class QuestionsFragment : RecyclerViewFragment<Question, QuestionList>() {
         adapter.onItemClickListener = object : OnItemClickListener {
             override fun onItemClick(v: View, position: Int) {
                 val question = adapter.getItem(position) as Question
-                toast(question.questionId.toString())
+                val args = Bundle()
+                question.questionId?.let {
+                    args.putInt(QuestionFragment.QUESTION_ID, question.questionId)
+                }
+                pushFragment(BasicActivity.FRAGMENT_TYPE_QUESTION, args)
             }
         }
         adapter

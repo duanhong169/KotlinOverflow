@@ -2,6 +2,7 @@ package top.defaults.kotlinoverflow.api
 
 import io.reactivex.Observable
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 import top.defaults.kotlinoverflow.model.QuestionList
 import top.defaults.kotlinoverflow.util.DEF_PAGE_SIZE
@@ -15,4 +16,8 @@ interface Questions {
                   @Query("order") order: String = "desc",
                   @Query("sort") sort: String = "activity",
                   @Query("filter") filter: String = "!6JW7LsM8VJgxM"): Observable<QuestionList>
+
+    @GET("questions/{question_id}")
+    fun question(@Path("question_id") id: Int,
+                  @Query("filter") filter: String = "!BHTP)YuzXDs2cAna2uOf9fRN5nD*4D"): Observable<QuestionList>
 }

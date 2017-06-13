@@ -52,4 +52,12 @@
         <item name="android:textColor">@color/text_blue_light_1</item>
     </style>
 
+    <style name="TextAppearance.Big">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextAppearance.Big.SO_GRAY">
+        <item name="android:textColor">@color/so_gray</item>
+    </style>
+
 </resources>

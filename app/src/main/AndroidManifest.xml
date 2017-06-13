@@ -24,6 +24,9 @@
 
         <activity android:name="top.defaults.kotlinoverflow.common.WebViewActivity"
                   android:launchMode="singleTop"/>
+
+        <activity android:name=".activity.BasicActivity"
+                  android:launchMode="singleTop"/>
     </application>
 
 </manifest>

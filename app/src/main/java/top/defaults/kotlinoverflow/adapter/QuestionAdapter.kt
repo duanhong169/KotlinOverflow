@@ -54,15 +54,7 @@ class QuestionAdapter : BaseRecyclerViewAdapter<Question>() {
             }
 
             title.text = data.title?.unescapeHtml()
-
-            tagsLayout.removeAllViews()
-            data.tags?.let { tags ->
-                for (tag in tags) {
-                    val textView = LayoutInflater.from(context).inflate(R.layout.item_tag, tagsLayout, false) as TextView
-                    textView.text = tag
-                    tagsLayout.addView(textView)
-                }
-            }
+            tagsLayout.setTags(data.tags)
 
             data.creationDate?.let { creationDate ->
                 time.text = DateUtils.getRelativeTimeSpanString(creationDate.toLong() * 1000)

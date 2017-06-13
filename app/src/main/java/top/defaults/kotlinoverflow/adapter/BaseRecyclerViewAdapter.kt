@@ -10,9 +10,11 @@ import top.defaults.kotlinoverflow.common.listener.OnItemClickListener
 
 abstract class BaseRecyclerViewAdapter<T> : RecyclerView.Adapter<BaseRecyclerViewAdapter<T>.ViewHolder>() {
 
-    private val TYPE_HEADER = Integer.MIN_VALUE
-    private val TYPE_FOOTER = Integer.MAX_VALUE
-    protected val TYPE_ITEM = 0
+    companion object {
+        private val TYPE_HEADER = Integer.MIN_VALUE
+        private val TYPE_FOOTER = Integer.MAX_VALUE
+        val TYPE_ITEM = 0
+    }
 
     var onItemClickListener: OnItemClickListener? = null
     var list: ArrayList<T?>? = null
@@ -42,7 +44,7 @@ abstract class BaseRecyclerViewAdapter<T> : RecyclerView.Adapter<BaseRecyclerVie
     }
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        if (getItemViewType(position) != TYPE_ITEM) return
+        if (getItemViewType(position) == TYPE_HEADER || getItemViewType(position) == TYPE_FOOTER) return
         val data = getItem(position)
         if (data != null) {
             holder?.bind(data)

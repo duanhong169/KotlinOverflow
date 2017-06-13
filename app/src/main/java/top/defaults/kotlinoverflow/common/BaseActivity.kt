@@ -1,5 +1,6 @@
 package top.defaults.kotlinoverflow.common
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -46,6 +47,10 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
 
     override fun getContext(): Context {
         return this
+    }
+
+    override fun startActivity(clazz: Class<out Activity>) {
+        startActivityForObservable(Intent(getContext(), clazz))
     }
 
     override fun startActivityForObservable(intent: Intent): Observable<ActivityResult> {

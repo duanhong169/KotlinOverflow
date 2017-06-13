@@ -4,10 +4,12 @@
     <color name="colorPrimaryDark">#8B54ED</color>
     <color name="colorAccent">#C953BE</color>
 
+    <color name="so_main">#F68004</color>
     <color name="so_gold">#FFCD00</color>
     <color name="so_silver">#B4B8BC</color>
     <color name="so_bronze">#D2A682</color>
     <color name="so_green">#5BBB7B</color>
+    <color name="so_gray">#858C93</color>
 
     <color name="gray_light_5">#FAFAFA</color>
     <color name="gray_light_4">#F5F5F5</color>
