@@ -14,6 +14,7 @@ import top.defaults.kotlinoverflow.api.Questions
 import top.defaults.kotlinoverflow.model.Question
 import top.defaults.kotlinoverflow.model.QuestionDetailSection
 import top.defaults.kotlinoverflow.model.QuestionList
+import top.defaults.kotlinoverflow.util.unescapeHtml
 import top.defaults.kotlinoverflow.view.ManagedRecyclerView
 
 class QuestionFragment : RecyclerViewFragment<QuestionDetailSection, QuestionList>() {
@@ -49,6 +50,7 @@ class QuestionFragment : RecyclerViewFragment<QuestionDetailSection, QuestionLis
         super.onViewCreated(view, savedInstanceState)
         question?.let { question ->
             fillAdapter(question, false)
+            setTitle(question.title?.unescapeHtml())
         }
     }
 
