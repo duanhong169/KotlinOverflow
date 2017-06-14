@@ -16,7 +16,6 @@ import top.defaults.kotlinoverflow.api.Questions
 import top.defaults.kotlinoverflow.common.listener.OnItemClickListener
 import top.defaults.kotlinoverflow.model.Question
 import top.defaults.kotlinoverflow.model.QuestionList
-import top.defaults.kotlinoverflow.util.toast
 import top.defaults.kotlinoverflow.view.ManagedRecyclerView
 
 class QuestionsFragment : RecyclerViewFragment<Question, QuestionList>() {
@@ -24,10 +23,10 @@ class QuestionsFragment : RecyclerViewFragment<Question, QuestionList>() {
         val adapter = QuestionAdapter()
         adapter.onItemClickListener = object : OnItemClickListener {
             override fun onItemClick(v: View, position: Int) {
-                val question = adapter.getItem(position) as Question
+                val question = adapter.getItem(position)
                 val args = Bundle()
-                question.questionId?.let {
-                    args.putInt(QuestionFragment.QUESTION_ID, question.questionId)
+                question?.let {
+                    args.putParcelable(QuestionFragment.QUESTION, question)
                 }
                 pushFragment(BasicActivity.FRAGMENT_TYPE_QUESTION, args)
             }

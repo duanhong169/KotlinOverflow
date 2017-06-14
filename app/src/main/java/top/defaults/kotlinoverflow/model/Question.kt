@@ -1,5 +1,7 @@
 package top.defaults.kotlinoverflow.model
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class Question(
@@ -60,4 +62,57 @@ data class Question(
 
     @field:SerializedName("answers")
     val answers: List<Answer?>? = null
-)
+) : Parcelable {
+	companion object {
+		@JvmField val CREATOR: Parcelable.Creator<Question> = object : Parcelable.Creator<Question> {
+			override fun createFromParcel(source: Parcel): Question = Question(source)
+			override fun newArray(size: Int): Array<Question?> = arrayOfNulls(size)
+		}
+	}
+
+	constructor(source: Parcel) : this(
+	source.readValue(Int::class.java.classLoader) as Int?,
+	source.readString(),
+	source.readString(),
+	source.readValue(Int::class.java.classLoader) as Int?,
+	source.readValue(Int::class.java.classLoader) as Int?,
+	source.readParcelable<ShallowUser>(ShallowUser::class.java.classLoader),
+	source.readValue(Boolean::class.java.classLoader) as Boolean?,
+	source.readValue(Int::class.java.classLoader) as Int?,
+	source.readValue(Int::class.java.classLoader) as Int?,
+	source.readValue(Int::class.java.classLoader) as Int?,
+	source.readValue(Int::class.java.classLoader) as Int?,
+	source.readString(),
+	source.readString(),
+	source.readValue(Int::class.java.classLoader) as Int?,
+	source.readValue(Int::class.java.classLoader) as Int?,
+	ArrayList<String?>().apply { source.readList(this, String::class.java.classLoader) },
+	source.readValue(Int::class.java.classLoader) as Int?,
+	ArrayList<Comment?>().apply { source.readList(this, Comment::class.java.classLoader) },
+	ArrayList<Answer?>().apply { source.readList(this, Answer::class.java.classLoader) }
+	)
+
+	override fun describeContents() = 0
+
+	override fun writeToParcel(dest: Parcel, flags: Int) {
+		dest.writeValue(score)
+		dest.writeString(link)
+		dest.writeString(shareLink)
+		dest.writeValue(lastActivityDate)
+		dest.writeValue(lastEditDate)
+		dest.writeParcelable(owner, 0)
+		dest.writeValue(isAnswered)
+		dest.writeValue(acceptedAnswerId)
+		dest.writeValue(creationDate)
+		dest.writeValue(upVoteCount)
+		dest.writeValue(answerCount)
+		dest.writeString(title)
+		dest.writeString(body)
+		dest.writeValue(questionId)
+		dest.writeValue(viewCount)
+		dest.writeList(tags)
+		dest.writeValue(commentCount)
+		dest.writeList(comments)
+		dest.writeList(answers)
+	}
+}
