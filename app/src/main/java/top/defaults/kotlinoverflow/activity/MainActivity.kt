@@ -27,26 +27,27 @@ class MainActivity : BaseActivity() {
     lateinit var loginItem: MenuItem
     private var questionSortTypes: LinkedHashMap<String, String> = LinkedHashMap()
     lateinit var drawerToggle: ActionBarDrawerToggle
-    private var selectedPosition: Int = 1
+    private var selectedSortType: String = App.preferences.getString(PREFS_KEY_QUESTION_SORT_TYPE, "votes")
 
     init {
-        questionSortTypes.put("Active", "activity")
-        questionSortTypes.put("Votes", "votes")
-        questionSortTypes.put("Newest", "creation")
-        questionSortTypes.put("Hot Today", "hot")
-        questionSortTypes.put("Hot Weekly", "week")
-        questionSortTypes.put("Hot Monthly", "month")
+        questionSortTypes.put("activity", "Active")
+        questionSortTypes.put("votes", "Votes")
+        questionSortTypes.put("creation", "Newest")
+        questionSortTypes.put("hot", "Hot Today")
+        questionSortTypes.put("week", "Hot Weekly")
+        questionSortTypes.put("month", "Hot Monthly")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        supportActionBar?.title = questionSortTypes.keys.toList()[selectedPosition]
+        supportActionBar?.title = questionSortTypes[selectedSortType]
 
-        drawerList.adapter = ArrayAdapter<String>(this, R.layout.item_drawer_list, R.id.title, questionSortTypes.keys.toList())
+        drawerList.adapter = ArrayAdapter<String>(this, R.layout.item_drawer_list, R.id.title, questionSortTypes.values.toList())
         drawerList.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             drawerLayout.closeDrawers()
-            selectedPosition = position
+            selectedSortType = questionSortTypes.keys.toList()[position]
+            App.preferences.put(PREFS_KEY_QUESTION_SORT_TYPE, selectedSortType)
             refresh()
         }
 
@@ -55,7 +56,7 @@ class MainActivity : BaseActivity() {
         drawerToggle = object : ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_open, R.string.drawer_close) {
             override fun onDrawerClosed(view: View) {
                 super.onDrawerClosed(view)
-                supportActionBar?.title = questionSortTypes.keys.toList()[selectedPosition]
+                supportActionBar?.title =  questionSortTypes[selectedSortType]
             }
 
             override fun onDrawerOpened(drawerView: View) {
@@ -144,10 +145,9 @@ class MainActivity : BaseActivity() {
     }
 
     private fun refresh() {
-        val sortKey = drawerList.adapter.getItem(selectedPosition) as String
         val fragment = QuestionsFragment()
         val args = Bundle()
-        args.putString("sort", questionSortTypes[sortKey])
+        args.putString("sort", selectedSortType)
         fragment.arguments = args
         supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
     }
