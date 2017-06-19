@@ -7,6 +7,6 @@
     android:paddingRight="6dp"
     android:paddingTop="4dp"
     android:paddingBottom="4dp"
-    android:background="#E1ECF4"
+    android:background="#E0EAF1"
     android:textAppearance="@style/TextAppearance.Small"
-    android:textColor="#35719D"/>
+    android:textColor="#3E6D8E"/>

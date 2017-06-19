@@ -49,7 +49,7 @@ class QuestionFragment : RecyclerViewFragment<QuestionDetailSection, QuestionLis
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         question?.let { question ->
-            fillAdapter(question, false)
+            fillAdapter(question, true)
             setTitle(question.title?.unescapeHtml())
         }
     }
@@ -85,7 +85,8 @@ class QuestionFragment : RecyclerViewFragment<QuestionDetailSection, QuestionLis
         val sections = ArrayList<QuestionDetailSection>()
         sections.add(QuestionDetailSection(QuestionDetailSection.SECTION_TYPE_QUESTION_HEAD, question))
         if (!onlyHead) {
-
+            sections.add(QuestionDetailSection(QuestionDetailSection.SECTION_TYPE_QUESTION_BODY, question))
+            sections.add(QuestionDetailSection(QuestionDetailSection.SECTION_TYPE_QUESTION_TAIL, question))
         }
         adapter.append(sections)
     }

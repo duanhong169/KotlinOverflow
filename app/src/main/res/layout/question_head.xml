@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="@dimen/layout_margin">
 
         <top.defaults.kotlinoverflow.view.Vote
             android:id="@+id/vote"

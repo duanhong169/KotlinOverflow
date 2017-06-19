@@ -36,7 +36,7 @@ class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 
     constructor(context: Context, attrs: AttributeSet?): this(context, attrs, 0)
 
     init {
-        badgeWidth = badgeSize + paddingLeft + paddingRight
+        badgeWidth = badgeSize + (2 * internalMargin)
         val a = context.theme.obtainStyledAttributes(attrs, R.styleable.Badges, 0 , 0)
         try {
             maxLines = a.getInt(R.styleable.Badges_maxLines, 1)
@@ -68,7 +68,7 @@ class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 
         textHeight = (textPaint.textSize + 0.5).toInt()
         lineHeight = Math.max(textHeight, badgeSize) + paddingTop + paddingBottom
 
-        var minW = 0
+        var minW = paddingLeft + paddingRight
         var minH = lineHeight
         if (gold > 0) {
             minW += badgeWidth
@@ -154,6 +154,6 @@ class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 
     }
 
     fun drawText(canvas: Canvas?, text: String, x: Float, y: Float) {
-        canvas?.drawText(text, x, y + textPaint.textSize, textPaint)
+        canvas?.drawText(text, x, y + (lineHeight + textPaint.textSize) / 2 - sp(2), textPaint)
     }
 }

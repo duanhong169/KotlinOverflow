@@ -29,7 +29,11 @@ class QuestionDetailSection(val type: Int, val data: Any?) {
 
     private fun getClazz(): Class<out Any>? {
         when(type) {
-            SECTION_TYPE_QUESTION_HEAD -> return Question::class.java
+            SECTION_TYPE_QUESTION_HEAD,
+            SECTION_TYPE_QUESTION_BODY,
+            SECTION_TYPE_QUESTION_TAIL -> return Question::class.java
+            SECTION_TYPE_ANSWER,
+            SECTION_TYPE_ANSWER_TITLE -> return Answer::class.java
         }
 
         return null

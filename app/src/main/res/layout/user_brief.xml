@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<merge
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/layout_margin"
-    android:background="@android:color/white">
+    tools:parentTag="android.widget.RelativeLayout">
 
     <ImageView
         android:id="@+id/avatar"
-        android:layout_width="64dp"
-        android:layout_height="64dp"/>
+        android:layout_width="44dp"
+        android:layout_height="44dp"/>
 
     <TextView
         android:id="@+id/name"
@@ -24,7 +24,7 @@
 
     <TextView
         android:id="@+id/reputation"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/avatar"
         android:layout_below="@id/name"
@@ -37,9 +37,9 @@
         android:id="@+id/badges"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/avatar"
-        android:layout_below="@id/reputation"
+        android:layout_toRightOf="@id/reputation"
+        android:layout_below="@id/name"
         android:layout_marginLeft="4dp"
-        android:layout_marginTop="6dp"/>
+        android:layout_marginTop="9dp"/>
 
-</RelativeLayout>
+</merge>

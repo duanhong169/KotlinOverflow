@@ -19,5 +19,5 @@ interface Questions {
 
     @GET("questions/{question_id}")
     fun question(@Path("question_id") id: Int,
-                  @Query("filter") filter: String = "!BHTP)YuzXDs2cAna2uOf9fRN5nD*4D"): Observable<QuestionList>
+                  @Query("filter") filter: String = "!-MQ9xUObayihy__dEmWyMV-jO0Py.E(i9"): Observable<QuestionList>
 }

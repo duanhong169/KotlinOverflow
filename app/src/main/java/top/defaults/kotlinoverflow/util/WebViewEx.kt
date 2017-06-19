@@ -11,12 +11,32 @@ import top.defaults.kotlinoverflow.`object`.AccessToken
 import top.defaults.kotlinoverflow.common.BaseActivity
 import java.net.URL
 import java.net.URLDecoder
+import java.util.*
 
 @SuppressLint("SetJavaScriptEnabled")
-fun WebView.configure(progressBar: ProgressBar?) {
+fun WebView.configure(progressBar: ProgressBar? = null) {
     setWebViewClient(MyWebViewClient())
     setWebChromeClient(MyWebChromeClient(progressBar))
     settings.javaScriptEnabled = true
+}
+
+private val HTML_DOCUMENT = "<!DOCTYPE html>\n" +
+        "<html>\n" +
+        "<head>\n" +
+        "    <style>pre{overflow-x:scroll;}</style>\n" +
+        "    <meta http-equiv=\"Content-type\" content=\"text/html; charset=utf-8\"/>\n" +
+        "    <meta name=\"viewport\" content=\"width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0\">\n" +
+        "    <link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.sstatic.net/Sites/stackoverflow/mobile.css?v=584c82562140\">\n" +
+        "    <script src=\"https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js\"></script>\n" +
+        "</head>\n" +
+        "<body>\n" +
+        "    %s\n" +
+        "</body>\n" +
+        "</html>"
+
+fun WebView.loadWithCss(body: String?) {
+    val preBody = body?.replace("<pre>", "<pre class=\"prettyprint\">")
+    loadDataWithBaseURL(null, String.format(Locale.US, HTML_DOCUMENT, preBody), "text/html", "utf-8", null)
 }
 
 private class MyWebViewClient : WebViewClient() {

@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
+    android:padding="@dimen/layout_margin"
     android:background="?android:attr/selectableItemBackground">
 
     <LinearLayout
@@ -73,7 +73,7 @@
             android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.Small.Light2"/>
+            android:textAppearance="@style/TextAppearance.Small.Light1"/>
 
         <TextView
             android:id="@+id/name"
@@ -97,10 +97,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"/>
+            android:layout_gravity="center_vertical"/>
 
     </LinearLayout>
 

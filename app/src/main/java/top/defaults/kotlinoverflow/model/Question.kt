@@ -24,6 +24,9 @@ data class Question(
     @field:SerializedName("owner")
 	val owner: ShallowUser? = null,
 
+	@field:SerializedName("last_editor")
+	val lastEditor: ShallowUser? = null,
+
 	@field:SerializedName("is_answered")
 	val isAnswered: Boolean? = null,
 
@@ -77,6 +80,7 @@ data class Question(
 	source.readValue(Int::class.java.classLoader) as Int?,
 	source.readValue(Int::class.java.classLoader) as Int?,
 	source.readParcelable<ShallowUser>(ShallowUser::class.java.classLoader),
+	source.readParcelable<ShallowUser>(ShallowUser::class.java.classLoader),
 	source.readValue(Boolean::class.java.classLoader) as Boolean?,
 	source.readValue(Int::class.java.classLoader) as Int?,
 	source.readValue(Int::class.java.classLoader) as Int?,
@@ -101,6 +105,7 @@ data class Question(
 		dest.writeValue(lastActivityDate)
 		dest.writeValue(lastEditDate)
 		dest.writeParcelable(owner, 0)
+		dest.writeParcelable(lastEditor, 0)
 		dest.writeValue(isAnswered)
 		dest.writeValue(acceptedAnswerId)
 		dest.writeValue(creationDate)
