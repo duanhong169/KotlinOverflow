@@ -54,7 +54,7 @@ class QuestionDetailAdapter : BaseRecyclerViewAdapter<QuestionDetailSection>() {
         private val tagsLayout = itemView.tags
 
         override fun bind(data: QuestionDetailSection) {
-            val question = data.get(Question::class.java)
+            val question = data.get<Question>()
             question?.let {
                 question.score?.let {
                     vote.set(question.score)
@@ -75,7 +75,7 @@ class QuestionDetailAdapter : BaseRecyclerViewAdapter<QuestionDetailSection>() {
         }
 
         override fun bind(data: QuestionDetailSection) {
-            val question = data.get(Question::class.java)
+            val question = data.get<Question>()
             question?.let {
                 webView.loadWithCss(question.body)
             }
@@ -89,7 +89,7 @@ class QuestionDetailAdapter : BaseRecyclerViewAdapter<QuestionDetailSection>() {
         private val lastEditor = itemView.lastEditor
 
         override fun bind(data: QuestionDetailSection) {
-            val question = data.get(Question::class.java)
+            val question = data.get<Question>()
             question?.let {
                 question.creationDate?.let {
                     creationTime.text = "Asked " + DateUtils.getRelativeTimeSpanString(question.creationDate.toLong() * 1000)

@@ -18,13 +18,11 @@ class QuestionDetailSection(val type: Int, val data: Any?) {
         }
     }
 
-    fun <T> get(clazz: Class<T>): T? {
+    fun <T> get(): T? {
         if (data == null) return null
-        if (clazz.name == getClazz()?.name) {
-            @Suppress("UNCHECKED_CAST")
-            return data as T
-        }
-        return null
+
+        @Suppress("UNCHECKED_CAST")
+        return data as T
     }
 
     private fun getClazz(): Class<out Any>? {
