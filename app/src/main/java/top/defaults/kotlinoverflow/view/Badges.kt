@@ -113,7 +113,7 @@ class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 
         super.onDraw(canvas)
 
         val w = measuredWidth
-        var x = 0f
+        var x = paddingLeft.toFloat()
         var y = 0f
         if (gold > 0) {
             colorPaint.color = context.getColorCompat(R.color.so_gold)
@@ -124,7 +124,7 @@ class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 
         }
         if (silver > 0) {
             if (x + badgeWidth + silverTextWidth + internalMargin > w) {
-                x = 0f
+                x = paddingLeft.toFloat()
                 y += lineHeight
             }
 
@@ -136,7 +136,7 @@ class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 
         }
         if (bronze > 0) {
             if (x + badgeWidth + bronzeTextWidth + internalMargin > w) {
-                x = 0f
+                x = paddingLeft.toFloat()
                 y += lineHeight
             }
 
