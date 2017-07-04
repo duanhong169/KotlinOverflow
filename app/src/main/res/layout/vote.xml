@@ -11,7 +11,8 @@
         android:id="@+id/up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:button="@drawable/up_vote"/>
+        android:button="@drawable/up_vote"
+        android:enabled="false"/>
 
     <TextView
         android:id="@+id/score"
@@ -25,5 +26,6 @@
         android:id="@+id/down"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:button="@drawable/down_vote"/>
+        android:button="@drawable/down_vote"
+        android:enabled="false"/>
 </merge>

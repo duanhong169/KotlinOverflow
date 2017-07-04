@@ -78,8 +78,10 @@ class ManagedRecyclerView(context: Context, attrs: AttributeSet? = null, defStyl
             // all items are visible in a single page
             if (visibleItemCount == totalItemCount) {
                 if (status === Status.NORMAL) {
-                    loadingFooter!!.setText(R.string.click_to_load_more)
-                    loadingFooter!!.setOnClickListener({ notifyLoadMore() })
+                    loadingFooter?.let { loadingFooter ->
+                        loadingFooter.setText(R.string.click_to_load_more)
+                        loadingFooter.setOnClickListener({ notifyLoadMore() })
+                    }
                 }
                 return
             }
@@ -136,7 +138,14 @@ class ManagedRecyclerView(context: Context, attrs: AttributeSet? = null, defStyl
             loadingFooter.visibility = View.VISIBLE
             loadingFooter.setOnClickListener(null)
             when (status) {
-                Status.NORMAL -> loadingFooter.setText(R.string.pull_to_load_more)
+                Status.NORMAL -> {
+                    if (isLoadingFooterFullVisible()) {
+                        loadingFooter.setText(R.string.click_to_load_more)
+                        loadingFooter.setOnClickListener({ notifyLoadMore() })
+                    } else {
+                        loadingFooter.setText(R.string.pull_to_load_more)
+                    }
+                }
                 Status.LOADING -> loadingFooter.setText(R.string.loading_more)
                 Status.NO_MORE -> {
                     loadingFooter.setText(R.string.no_more)

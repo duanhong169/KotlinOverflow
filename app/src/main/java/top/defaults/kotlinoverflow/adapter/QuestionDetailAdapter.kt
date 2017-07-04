@@ -1,13 +1,18 @@
 package top.defaults.kotlinoverflow.adapter
 
+import android.annotation.SuppressLint
 import android.text.format.DateUtils
 import android.view.View
+import kotlinx.android.synthetic.main.answer.view.*
+import kotlinx.android.synthetic.main.answer_title.view.*
 import kotlinx.android.synthetic.main.question_body.view.*
 import kotlinx.android.synthetic.main.question_head.view.*
 import kotlinx.android.synthetic.main.question_tail.view.*
 import top.defaults.kotlinoverflow.R
+import top.defaults.kotlinoverflow.model.Answer
 import top.defaults.kotlinoverflow.model.QuestionDetailSection
 import top.defaults.kotlinoverflow.model.Question
+import top.defaults.kotlinoverflow.util.addOnPrefixIfNeeded
 import top.defaults.kotlinoverflow.util.configure
 import top.defaults.kotlinoverflow.util.loadWithCss
 import top.defaults.kotlinoverflow.util.unescapeHtml
@@ -30,6 +35,8 @@ class QuestionDetailAdapter : BaseRecyclerViewAdapter<QuestionDetailSection>() {
             QuestionDetailSection.SECTION_TYPE_QUESTION_HEAD -> return R.layout.question_head
             QuestionDetailSection.SECTION_TYPE_QUESTION_BODY -> return R.layout.question_body
             QuestionDetailSection.SECTION_TYPE_QUESTION_TAIL -> return R.layout.question_tail
+            QuestionDetailSection.SECTION_TYPE_ANSWER_TITLE -> return R.layout.answer_title
+            QuestionDetailSection.SECTION_TYPE_ANSWER -> return R.layout.answer
             else -> return R.layout.question_body
         }
     }
@@ -43,6 +50,8 @@ class QuestionDetailAdapter : BaseRecyclerViewAdapter<QuestionDetailSection>() {
             QuestionDetailSection.SECTION_TYPE_QUESTION_HEAD -> return QuestionHead(itemView)
             QuestionDetailSection.SECTION_TYPE_QUESTION_BODY -> return QuestionBody(itemView)
             QuestionDetailSection.SECTION_TYPE_QUESTION_TAIL -> return QuestionTail(itemView)
+            QuestionDetailSection.SECTION_TYPE_ANSWER_TITLE -> return AnswerTitle(itemView)
+            QuestionDetailSection.SECTION_TYPE_ANSWER -> return AnswerContainer(itemView)
             else -> return QuestionHead(itemView)
         }
     }
@@ -88,22 +97,72 @@ class QuestionDetailAdapter : BaseRecyclerViewAdapter<QuestionDetailSection>() {
         private val owner = itemView.owner
         private val lastEditor = itemView.lastEditor
 
+        @SuppressLint("SetTextI18n")
         override fun bind(data: QuestionDetailSection) {
             val question = data.get<Question>()
             question?.let {
                 question.creationDate?.let {
-                    creationTime.text = "Asked " + DateUtils.getRelativeTimeSpanString(question.creationDate.toLong() * 1000)
+                    creationTime.text = "Asked " + DateUtils.getRelativeTimeSpanString(question.creationDate.toLong() * 1000).addOnPrefixIfNeeded()
                 }
 
                 question.owner?.let {
                     owner.set(question.owner)
                 }
 
-                if (question.lastEditor != null) {
+                if (question.lastEditor != null && question.lastEditor.userId != question.owner?.userId) {
                     lastEditor.visibility = View.VISIBLE
                     lastEditor.set(question.lastEditor)
                 } else {
                     lastEditor.visibility = View.INVISIBLE
+                }
+            }
+        }
+    }
+
+    inner class AnswerTitle(itemView: View) : BaseRecyclerViewAdapter<QuestionDetailSection>.ViewHolder(itemView) {
+
+        private val title = itemView.answerTitle
+
+        @SuppressLint("SetTextI18n")
+        override fun bind(data: QuestionDetailSection) {
+            val answerCount = data.get<Int>()
+            answerCount?.let {
+                title.text = answerCount.toString() + " Answers"
+            }
+        }
+    }
+
+    inner class AnswerContainer(itemView: View) : BaseRecyclerViewAdapter<QuestionDetailSection>.ViewHolder(itemView) {
+
+        private val vote = itemView.answerVote
+        private val answered = itemView.answered
+        private val webView = itemView.answerWebView
+        private val creationTime = itemView.answerCreationTime
+        private val owner = itemView.answerOwner
+        private val lastEditor = itemView.answerLastEditor
+
+        @SuppressLint("SetTextI18n")
+        override fun bind(data: QuestionDetailSection) {
+            val answer = data.get<Answer>()
+            answer?.let {
+                answer.score?.let {
+                    vote.set(answer.score)
+                }
+                answered.setImageResource(0)
+                webView.loadWithCss(answer.body)
+                answer.creationDate?.let {
+                    creationTime.text = "Answered " + DateUtils.getRelativeTimeSpanString(answer.creationDate.toLong() * 1000).addOnPrefixIfNeeded()
+                }
+
+                answer.owner?.let {
+                    owner.set(answer.owner)
+                }
+
+                if (answer.lastEditor != null && answer.lastEditor.userId != answer.owner?.userId) {
+                    lastEditor.visibility = View.VISIBLE
+                    lastEditor.set(answer.lastEditor)
+                } else {
+                    lastEditor.visibility = View.GONE
                 }
             }
         }

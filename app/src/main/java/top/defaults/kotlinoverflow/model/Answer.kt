@@ -22,6 +22,9 @@ data class Answer(
 	@field:SerializedName("owner")
 	val owner: ShallowUser? = null,
 
+	@field:SerializedName("last_editor")
+	val lastEditor: ShallowUser? = null,
+
 	@field:SerializedName("creation_date")
 	val creationDate: Int? = null,
 

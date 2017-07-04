@@ -7,6 +7,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.user_brief.view.*
 import top.defaults.kotlinoverflow.R
 import top.defaults.kotlinoverflow.model.ShallowUser
+import top.defaults.kotlinoverflow.util.reputationAbbrev
 import top.defaults.kotlinoverflow.util.unescapeHtml
 
 class UserBrief(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : RelativeLayout(context, attrs, defStyleAttr) {
@@ -21,7 +22,7 @@ class UserBrief(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int
     fun set(user: ShallowUser) {
         Picasso.with(context).load(user.profileImage).into(avatar)
         name.text = user.displayName?.unescapeHtml()
-        reputation.text = user.reputation.toString()
+        reputation.text = user.reputation?.reputationAbbrev()
         badges.setBadges(user.badgeCounts?.gold?:0, user.badgeCounts?.silver?:0, user.badgeCounts?.bronze?:0)
     }
 }

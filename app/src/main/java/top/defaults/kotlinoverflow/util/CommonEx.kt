@@ -10,7 +10,6 @@ import okhttp3.HttpUrl
 import org.apache.commons.lang3.StringEscapeUtils
 import top.defaults.kotlinoverflow.App
 import top.defaults.kotlinoverflow.common.BaseView
-import java.net.URLDecoder
 import java.text.NumberFormat
 
 val PREFS_KEY_ACCESS_TOKEN = "access_token"
@@ -142,4 +141,8 @@ fun Int.viewCountAbbrev(): String {
 
 fun String.unescapeHtml(): String {
     return StringEscapeUtils.unescapeHtml4(this)
+}
+
+fun CharSequence.addOnPrefixIfNeeded(): CharSequence {
+    return if (this.contains("ago")) "on" + this else this
 }

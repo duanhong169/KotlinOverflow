@@ -9,6 +9,7 @@ import android.webkit.WebViewClient
 import android.widget.ProgressBar
 import top.defaults.kotlinoverflow.`object`.AccessToken
 import top.defaults.kotlinoverflow.common.BaseActivity
+import top.defaults.kotlinoverflow.common.WebViewActivity
 import java.net.URL
 import java.net.URLDecoder
 import java.util.*
@@ -27,7 +28,6 @@ private val HTML_DOCUMENT = "<!DOCTYPE html>\n" +
         "    <meta http-equiv=\"Content-type\" content=\"text/html; charset=utf-8\"/>\n" +
         "    <meta name=\"viewport\" content=\"width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0\">\n" +
         "    <link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.sstatic.net/Sites/stackoverflow/mobile.css?v=584c82562140\">\n" +
-        "    <script src=\"https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js\"></script>\n" +
         "</head>\n" +
         "<body>\n" +
         "    %s\n" +
@@ -60,6 +60,10 @@ private class MyWebViewClient : WebViewClient() {
                 activity.finish()
                 return true
             }
+        } else if (view.context !is WebViewActivity) {
+            val intent = WebViewActivity.buildIntent(view.context, urlString)
+            view.context.startActivity(intent)
+            return true
         }
         return false
     }
@@ -73,6 +77,11 @@ private class MyWebViewClient : WebViewClient() {
             queryPairs.put(URLDecoder.decode(pair.substring(0, idx), "UTF-8"), URLDecoder.decode(pair.substring(idx + 1), "UTF-8"))
         }
         return queryPairs
+    }
+
+    override fun onPageFinished(webView: WebView, url: String) {
+        super.onPageFinished(webView, url)
+        webView.parent?.requestLayout()
     }
 }
 

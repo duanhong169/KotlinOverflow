@@ -1,5 +1,7 @@
 package top.defaults.kotlinoverflow.model
 
+import kotlin.reflect.KClass
+
 class QuestionDetailSection(val type: Int, val data: Any?) {
 
     companion object {
@@ -11,8 +13,8 @@ class QuestionDetailSection(val type: Int, val data: Any?) {
     }
 
     init {
-        if (data != null) {
-            if (getClazz()?.name != data::class.java.name) {
+        data?.let { data ->
+            if (getClazz()?.java?.name != data::class.java.name) {
                 throw IllegalArgumentException("Wrong data type")
             }
         }
@@ -25,13 +27,13 @@ class QuestionDetailSection(val type: Int, val data: Any?) {
         return data as T
     }
 
-    private fun getClazz(): Class<out Any>? {
+    private fun getClazz(): KClass<out Any>? {
         when(type) {
             SECTION_TYPE_QUESTION_HEAD,
             SECTION_TYPE_QUESTION_BODY,
-            SECTION_TYPE_QUESTION_TAIL -> return Question::class.java
-            SECTION_TYPE_ANSWER,
-            SECTION_TYPE_ANSWER_TITLE -> return Answer::class.java
+            SECTION_TYPE_QUESTION_TAIL -> return Question::class
+            SECTION_TYPE_ANSWER_TITLE -> return Integer::class
+            SECTION_TYPE_ANSWER -> return Answer::class
         }
 
         return null

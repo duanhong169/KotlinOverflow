@@ -87,6 +87,16 @@ class QuestionFragment : RecyclerViewFragment<QuestionDetailSection, QuestionLis
         if (!onlyHead) {
             sections.add(QuestionDetailSection(QuestionDetailSection.SECTION_TYPE_QUESTION_BODY, question))
             sections.add(QuestionDetailSection(QuestionDetailSection.SECTION_TYPE_QUESTION_TAIL, question))
+            question.answerCount?.let { answerCount ->
+                sections.add(QuestionDetailSection(QuestionDetailSection.SECTION_TYPE_ANSWER_TITLE, answerCount))
+            }
+            question.answers?.let { answers ->
+                for (answer in answers) {
+                    answer?.let { answer ->
+                        sections.add(QuestionDetailSection(QuestionDetailSection.SECTION_TYPE_ANSWER, answer))
+                    }
+                }
+            }
         }
         adapter.append(sections)
     }
