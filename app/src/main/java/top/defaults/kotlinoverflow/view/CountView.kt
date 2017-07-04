@@ -14,7 +14,7 @@ import top.defaults.kotlinoverflow.util.getColorCompat
 
 class CountView(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr) {
 
-    private var text: String? = "Null"
+    private var text: String = "Null"
     private var count: String = "0"
     private var style: Style = Style.NORMAL
     private var textPaint: Paint
@@ -67,7 +67,7 @@ class CountView(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int
         numberWidth = textBounds.right - textBounds.left
 
         textPaint.textSize = numberSize
-        textPaint.getTextBounds(text, 0, text!!.length, textBounds)
+        textPaint.getTextBounds(text, 0, text.length, textBounds)
         textHeight = (textPaint.textSize + 0.5).toInt()
         textWidth = textBounds.right - textBounds.left
 

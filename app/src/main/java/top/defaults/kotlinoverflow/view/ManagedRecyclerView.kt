@@ -20,12 +20,15 @@ import top.defaults.kotlinoverflow.adapter.BaseRecyclerViewAdapter
 
 class ManagedRecyclerView(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : FrameLayout(context, attrs, defStyleAttr) {
 
-    private var loadingFooter: TextView? = null
+    private var loadingFooterEnabled = false
+    private val loadingFooter: TextView by lazy {
+        LayoutInflater.from(context).inflate(R.layout.loading_footer, this, false) as TextView
+    }
     var recyclerView: RecyclerView
     var swipeRefreshLayout: SwipeRefreshLayout
     var onRefreshListener: SwipeRefreshLayout.OnRefreshListener? = null
     val colorAnimator: ObjectAnimator by lazy {
-        val animator = ObjectAnimator.ofInt(loadingFooter!!, "textColor", ContextCompat.getColor(context, R.color.colorPrimary), ContextCompat.getColor(context, R.color.colorAccent))
+        val animator = ObjectAnimator.ofInt(loadingFooter, "textColor", ContextCompat.getColor(context, R.color.colorPrimary), ContextCompat.getColor(context, R.color.colorAccent))
         animator.setEvaluator(ArgbEvaluator())
         animator.target = loadingFooter
         animator.duration = 500
@@ -59,6 +62,15 @@ class ManagedRecyclerView(context: Context, attrs: AttributeSet? = null, defStyl
     init {
         inflate(context, R.layout.managed_recycler_view, this)
         recyclerView = findViewById(R.id.top_defaults_kotlinoverflow_view_ManagedRecyclerView_recyclerView) as RecyclerView
+        val layoutManager = recyclerView.layoutManager
+        if (layoutManager is GridLayoutManager) {
+            val lookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return if (getExtendedAdapter().isItemFullSpan(position)) layoutManager.spanCount else 1
+                }
+            }
+            layoutManager.spanSizeLookup = lookup
+        }
         swipeRefreshLayout = findViewById(R.id.top_defaults_kotlinoverflow_view_ManagedRecyclerView_swipeRefreshLayout) as SwipeRefreshLayout
         swipeRefreshLayout.setOnRefreshListener { onRefreshListener?.onRefresh() }
     }
@@ -78,7 +90,7 @@ class ManagedRecyclerView(context: Context, attrs: AttributeSet? = null, defStyl
             // all items are visible in a single page
             if (visibleItemCount == totalItemCount) {
                 if (status === Status.NORMAL) {
-                    loadingFooter?.let { loadingFooter ->
+                    if (loadingFooterEnabled) {
                         loadingFooter.setText(R.string.click_to_load_more)
                         loadingFooter.setOnClickListener({ notifyLoadMore() })
                     }
@@ -94,22 +106,17 @@ class ManagedRecyclerView(context: Context, attrs: AttributeSet? = null, defStyl
 
     fun enableLoadingFooterTextView(): TextView {
         recyclerView.removeOnScrollListener(autoLoadMoreOnScrollListener)
-
-        loadingFooter = LayoutInflater.from(context).inflate(R.layout.loading_footer, this, false) as TextView
-        getExtendedAdapter().setFooter(loadingFooter!!)
-        val layoutManager = recyclerView.layoutManager
-        if (layoutManager is GridLayoutManager) {
-            val lookup = object : GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int {
-                    return if (getExtendedAdapter().isItemFullSpan(position)) layoutManager.spanCount else 1
-                }
-            }
-            layoutManager.spanSizeLookup = lookup
-        }
-
+        getExtendedAdapter().setFooter(loadingFooter)
         recyclerView.addOnScrollListener(autoLoadMoreOnScrollListener)
 
-        return loadingFooter!!
+        loadingFooterEnabled = true
+        return loadingFooter
+    }
+
+    fun disableLoadingFooterTextView() {
+        loadingFooterEnabled = false
+        recyclerView.removeOnScrollListener(autoLoadMoreOnScrollListener)
+        getExtendedAdapter().removeFooter()
     }
 
     fun getExtendedAdapter(): BaseRecyclerViewAdapter<*> {
@@ -128,7 +135,7 @@ class ManagedRecyclerView(context: Context, attrs: AttributeSet? = null, defStyl
             swipeRefreshLayout.isRefreshing = false
         }
 
-        loadingFooter?.let { loadingFooter ->
+        if (loadingFooterEnabled) {
             if (status == Status.LOADING) {
                 colorAnimator.start()
             } else {
