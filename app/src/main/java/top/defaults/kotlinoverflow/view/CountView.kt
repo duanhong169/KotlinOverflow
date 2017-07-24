@@ -35,6 +35,8 @@ class CountView(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int
         val a = context.theme.obtainStyledAttributes(attrs, R.styleable.CountView, 0 , 0)
         try {
             text = a.getString(R.styleable.CountView_text)
+        } catch (t: Throwable) {
+            // ignore: java.lang.IllegalStateException: a.getString(R.styleable.CountView_text) must not be null
         } finally {
             a.recycle()
         }

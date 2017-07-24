@@ -7,8 +7,6 @@ import top.defaults.kotlinoverflow.model.Question
 import kotlinx.android.synthetic.main.item_question_brief.view.*
 import top.defaults.kotlinoverflow.util.reputationAbbrev
 import java.util.*
-import android.view.LayoutInflater
-import android.widget.TextView
 import top.defaults.kotlinoverflow.util.unescapeHtml
 import top.defaults.kotlinoverflow.util.viewCountAbbrev
 import top.defaults.kotlinoverflow.view.CountView
