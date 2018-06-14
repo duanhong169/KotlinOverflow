@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import top.defaults.kotlinoverflow.common.listener.OnItemClickListener
 
 abstract class BaseRecyclerViewAdapter<T> : RecyclerView.Adapter<BaseRecyclerViewAdapter<T>.ViewHolder>() {
 
@@ -16,14 +15,14 @@ abstract class BaseRecyclerViewAdapter<T> : RecyclerView.Adapter<BaseRecyclerVie
         val TYPE_ITEM = 0
     }
 
-    var onItemClickListener: OnItemClickListener? = null
+    var onItemClickListener: ((v: View, position: Int) -> Unit)? = null
     var list: ArrayList<T?>? = null
     private var headerView: View? = null
     private var footerView: View? = null
 
     fun append(list: List<T?>) {
         if (this.list == null) {
-            this.list = ArrayList<T?>()
+            this.list = ArrayList()
         }
         this.list?.addAll(list)
     }
@@ -32,22 +31,28 @@ abstract class BaseRecyclerViewAdapter<T> : RecyclerView.Adapter<BaseRecyclerVie
         list?.clear()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, itemType: Int): ViewHolder {
+    var listener: (() -> Unit)? = null
+
+    fun setOnBackPressed(l: () -> Unit) {
+        listener = l
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, itemType: Int): ViewHolder {
         if (itemType == TYPE_HEADER) {
             return HeaderFooterHolder(headerView!!)
         } else if (itemType == TYPE_FOOTER) {
             return HeaderFooterHolder(footerView!!)
         }
 
-        val itemView = LayoutInflater.from(parent!!.context).inflate(getItemLayout(itemType), parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(getItemLayout(itemType), parent, false)
         return onCreateViewHolder(itemView, itemType)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if (getItemViewType(position) == TYPE_HEADER || getItemViewType(position) == TYPE_FOOTER) return
         val data = getItem(position)
         if (data != null) {
-            holder?.bind(data)
+            holder.bind(data)
         }
     }
 
@@ -123,7 +128,8 @@ abstract class BaseRecyclerViewAdapter<T> : RecyclerView.Adapter<BaseRecyclerVie
 
         init {
             itemView.setOnClickListener { v ->
-                onItemClickListener?.onItemClick(v, adapterPosition)
+                onItemClickListener?.invoke(v, adapterPosition)
+                listener?.invoke()
             }
         }
 

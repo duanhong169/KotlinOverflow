@@ -18,17 +18,17 @@ import top.defaults.kotlinoverflow.view.ManagedRecyclerView
 abstract class RecyclerViewFragment<E, C> : BaseFragment() {
     lateinit var managedRecyclerView: ManagedRecyclerView
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_recycler_view, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_recycler_view, container, false)
     }
 
     abstract fun getAdapter(): BaseRecyclerViewAdapter<E>
 
     abstract fun getLayoutManager(): RecyclerView.LayoutManager
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        managedRecyclerView = activity.managedRecyclerView
+        managedRecyclerView = activity!!.managedRecyclerView
         val recyclerView = managedRecyclerView.recyclerView
         recyclerView.layoutManager = getLayoutManager()
 

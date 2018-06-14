@@ -29,6 +29,8 @@ class QuestionsFragment : RecyclerViewFragment<Question, QuestionList>() {
                     args.putParcelable(QuestionFragment.QUESTION, question)
                 }
                 pushFragment(BasicActivity.FRAGMENT_TYPE_QUESTION, args)
+
+                v.setOnClickListener {  }
             }
         }
         adapter
@@ -48,13 +50,13 @@ class QuestionsFragment : RecyclerViewFragment<Question, QuestionList>() {
 
     override fun onConfigure(recyclerView: ManagedRecyclerView) {
         val itemDecoration = DividerItemDecoration(context, layoutManager.orientation)
-        itemDecoration.setDrawable(ContextCompat.getDrawable(context, R.drawable.divider_horizontal_1px))
+        itemDecoration.setDrawable(ContextCompat.getDrawable(context!!, R.drawable.divider_horizontal_1px)!!)
         recyclerView.recyclerView.addItemDecoration(itemDecoration)
     }
 
     override fun getObservable(): Observable<QuestionList> {
         return Http.create(Questions::class.java)
-                .questions(managedRecyclerView.paging.page, sort = arguments.getString("sort", "activity"))
+                .questions(managedRecyclerView.paging.page, sort = arguments!!.getString("sort", "activity"))
     }
 
     override fun doWork(observable: Observable<QuestionList>, append: Boolean) {

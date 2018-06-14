@@ -41,12 +41,12 @@ class QuestionFragment : RecyclerViewFragment<QuestionDetailSection, QuestionLis
         return layoutManager
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        question = arguments.getParcelable<Question>(QUESTION)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        question = arguments?.getParcelable(QUESTION)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         question?.let { question ->
             fillAdapter(question, true)

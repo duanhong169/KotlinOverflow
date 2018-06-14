@@ -40,7 +40,7 @@ interface BaseView {
 
     fun startActivity(clazz: Class<out Activity>)
     fun startActivityForObservable(intent: Intent): Observable<ActivityResult>
-    fun getContext(): Context
+    fun getContext(): Context?
     fun destroyObservable(): Observable<Unit>
     fun getProgressDialog(): ProgressDialog
     fun showProgressDialog(message: CharSequence?): ProgressDialog {

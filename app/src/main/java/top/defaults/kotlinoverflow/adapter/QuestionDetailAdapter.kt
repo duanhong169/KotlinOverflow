@@ -31,13 +31,13 @@ class QuestionDetailAdapter : BaseRecyclerViewAdapter<QuestionDetailSection>() {
     }
 
     override fun getItemLayout(viewType: Int): Int {
-        when(viewType) {
-            QuestionDetailSection.SECTION_TYPE_QUESTION_HEAD -> return R.layout.question_head
-            QuestionDetailSection.SECTION_TYPE_QUESTION_BODY -> return R.layout.question_body
-            QuestionDetailSection.SECTION_TYPE_QUESTION_TAIL -> return R.layout.question_tail
-            QuestionDetailSection.SECTION_TYPE_ANSWER_TITLE -> return R.layout.answer_title
-            QuestionDetailSection.SECTION_TYPE_ANSWER -> return R.layout.answer
-            else -> return R.layout.question_body
+        return when(viewType) {
+            QuestionDetailSection.SECTION_TYPE_QUESTION_HEAD -> R.layout.question_head
+            QuestionDetailSection.SECTION_TYPE_QUESTION_BODY -> R.layout.question_body
+            QuestionDetailSection.SECTION_TYPE_QUESTION_TAIL -> R.layout.question_tail
+            QuestionDetailSection.SECTION_TYPE_ANSWER_TITLE -> R.layout.answer_title
+            QuestionDetailSection.SECTION_TYPE_ANSWER -> R.layout.answer
+            else -> R.layout.question_body
         }
     }
 
