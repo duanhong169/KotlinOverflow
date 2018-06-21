@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import top.defaults.kotlinoverflow.common.listener.OnItemClickListener
 
 abstract class BaseRecyclerViewAdapter<T> : RecyclerView.Adapter<BaseRecyclerViewAdapter<T>.ViewHolder>() {
 
@@ -15,7 +16,7 @@ abstract class BaseRecyclerViewAdapter<T> : RecyclerView.Adapter<BaseRecyclerVie
         val TYPE_ITEM = 0
     }
 
-    var onItemClickListener: ((v: View, position: Int) -> Unit)? = null
+    var onItemClickListener: OnItemClickListener? = null
     var list: ArrayList<T?>? = null
     private var headerView: View? = null
     private var footerView: View? = null
@@ -128,8 +129,7 @@ abstract class BaseRecyclerViewAdapter<T> : RecyclerView.Adapter<BaseRecyclerVie
 
         init {
             itemView.setOnClickListener { v ->
-                onItemClickListener?.invoke(v, adapterPosition)
-                listener?.invoke()
+                onItemClickListener?.onItemClick(v, adapterPosition)
             }
         }
 
