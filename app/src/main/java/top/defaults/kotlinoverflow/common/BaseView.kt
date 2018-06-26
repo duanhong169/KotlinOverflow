@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package top.defaults.kotlinoverflow.common
 
 import android.app.ProgressDialog

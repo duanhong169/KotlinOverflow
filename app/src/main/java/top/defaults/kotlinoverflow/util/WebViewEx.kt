@@ -16,12 +16,12 @@ import java.util.*
 
 @SuppressLint("SetJavaScriptEnabled")
 fun WebView.configure(progressBar: ProgressBar? = null) {
-    setWebViewClient(MyWebViewClient())
-    setWebChromeClient(MyWebChromeClient(progressBar))
+    webViewClient = MyWebViewClient()
+    webChromeClient = MyWebChromeClient(progressBar)
     settings.javaScriptEnabled = true
 }
 
-private val HTML_DOCUMENT = "<!DOCTYPE html>\n" +
+private const val HTML_DOCUMENT = "<!DOCTYPE html>\n" +
         "<html>\n" +
         "<head>\n" +
         "    <style>pre{overflow-x:scroll;}</style>\n" +
@@ -74,7 +74,7 @@ private class MyWebViewClient : WebViewClient() {
         val pairs = query.split("&".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         for (pair in pairs) {
             val idx = pair.indexOf("=")
-            queryPairs.put(URLDecoder.decode(pair.substring(0, idx), "UTF-8"), URLDecoder.decode(pair.substring(idx + 1), "UTF-8"))
+            queryPairs[URLDecoder.decode(pair.substring(0, idx), "UTF-8")] = URLDecoder.decode(pair.substring(idx + 1), "UTF-8")
         }
         return queryPairs
     }

@@ -84,28 +84,28 @@ class CountView(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int
         val w = measuredWidth
         var y = paddingTop.toFloat()
 
-        canvas?.let { canvas ->
+        canvas?.let { it ->
             when (style) {
                 Style.NORMAL -> textPaint.color = context.getColorCompat(R.color.text_light_1)
                 Style.STROKE -> {
                     textPaint.color = context.getColorCompat(R.color.so_green)
                     colorPaint.style = Paint.Style.STROKE
-                    canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), colorPaint)
+                    it.drawRect(0f, 0f, width.toFloat(), height.toFloat(), colorPaint)
                 }
                 Style.FILL -> {
                     textPaint.color = Color.WHITE
                     colorPaint.style = Paint.Style.FILL_AND_STROKE
-                    canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), colorPaint)
+                    it.drawRect(0f, 0f, width.toFloat(), height.toFloat(), colorPaint)
                 }
             }
 
             textPaint.textSize = textSize
-            canvas.drawText(count, ((w - numberWidth) / 2).toFloat(), y + textPaint.textSize, textPaint)
+            it.drawText(count, ((w - numberWidth) / 2).toFloat(), y + textPaint.textSize, textPaint)
 
             y += numberHeight + verticalMargin
 
             textPaint.textSize = numberSize
-            canvas.drawText(text, ((w - textWidth) / 2).toFloat(), y + textPaint.textSize, textPaint)
+            it.drawText(text, ((w - textWidth) / 2).toFloat(), y + textPaint.textSize, textPaint)
         }
     }
 }

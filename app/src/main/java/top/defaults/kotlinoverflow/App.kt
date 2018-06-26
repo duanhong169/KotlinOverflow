@@ -15,8 +15,8 @@ import top.defaults.kotlinoverflow.util.*
 class App : Application() {
 
     companion object {
-        val EVENT_LOGGED_IN = 1
-        val EVENT_LOGGED_OUT = 2
+        const val EVENT_LOGGED_IN = 1
+        const val EVENT_LOGGED_OUT = 2
 
         lateinit var appContext: Context
         val userState: BehaviorSubject<Int> by lazy {

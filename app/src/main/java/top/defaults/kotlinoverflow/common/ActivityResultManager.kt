@@ -31,12 +31,10 @@ class ActivityResultManager {
     }
 
     private fun startActivityForResult(intent: Intent, requestCode: Int) {
-        if (activity != null) {
-            activity.startActivityForResult(intent, requestCode)
-        } else if (fragment != null) {
-            fragment.startActivityForResult(intent, requestCode)
-        } else {
-            throw RuntimeException("Both activity & fragment are null")
+        when {
+            activity != null -> activity.startActivityForResult(intent, requestCode)
+            fragment != null -> fragment.startActivityForResult(intent, requestCode)
+            else -> throw RuntimeException("Both activity & fragment are null")
         }
     }
 

@@ -22,7 +22,7 @@ class QuestionFragment : RecyclerViewFragment<QuestionDetailSection, QuestionLis
     private var question: Question? = null
 
     companion object {
-        val QUESTION = "question"
+        const val QUESTION = "question"
     }
 
     private val adapter: QuestionDetailAdapter by lazy {
@@ -92,8 +92,8 @@ class QuestionFragment : RecyclerViewFragment<QuestionDetailSection, QuestionLis
             }
             question.answers?.let { answers ->
                 for (answer in answers) {
-                    answer?.let { answer ->
-                        sections.add(QuestionDetailSection(QuestionDetailSection.SECTION_TYPE_ANSWER, answer))
+                    answer?.let { it ->
+                        sections.add(QuestionDetailSection(QuestionDetailSection.SECTION_TYPE_ANSWER, it))
                     }
                 }
             }

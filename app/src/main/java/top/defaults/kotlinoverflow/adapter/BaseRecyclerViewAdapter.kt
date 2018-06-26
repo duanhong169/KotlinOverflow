@@ -11,13 +11,13 @@ import top.defaults.kotlinoverflow.common.listener.OnItemClickListener
 abstract class BaseRecyclerViewAdapter<T> : RecyclerView.Adapter<BaseRecyclerViewAdapter<T>.ViewHolder>() {
 
     companion object {
-        private val TYPE_HEADER = Integer.MIN_VALUE
-        private val TYPE_FOOTER = Integer.MAX_VALUE
-        val TYPE_ITEM = 0
+        private const val TYPE_HEADER = Integer.MIN_VALUE
+        private const val TYPE_FOOTER = Integer.MAX_VALUE
+        const val TYPE_ITEM = 0
     }
 
     var onItemClickListener: OnItemClickListener? = null
-    var list: ArrayList<T?>? = null
+    private var list: ArrayList<T?>? = null
     private var headerView: View? = null
     private var footerView: View? = null
 
@@ -32,7 +32,7 @@ abstract class BaseRecyclerViewAdapter<T> : RecyclerView.Adapter<BaseRecyclerVie
         list?.clear()
     }
 
-    var listener: (() -> Unit)? = null
+    private var listener: (() -> Unit)? = null
 
     fun setOnBackPressed(l: () -> Unit) {
         listener = l

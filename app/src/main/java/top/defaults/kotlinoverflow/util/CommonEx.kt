@@ -12,9 +12,9 @@ import top.defaults.kotlinoverflow.App
 import top.defaults.kotlinoverflow.common.BaseView
 import java.text.NumberFormat
 
-val PREFS_KEY_ACCESS_TOKEN = "access_token"
-val PREFS_KEY_USER = "user"
-val PREFS_KEY_QUESTION_SORT_TYPE = "question_sort_type"
+const val PREFS_KEY_ACCESS_TOKEN = "access_token"
+const val PREFS_KEY_USER = "user"
+const val PREFS_KEY_QUESTION_SORT_TYPE = "question_sort_type"
 
 fun <E> List<E>?.isEmpty(): Boolean {
     return this?.size == 0

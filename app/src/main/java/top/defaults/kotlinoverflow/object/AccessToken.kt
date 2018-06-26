@@ -6,16 +6,16 @@ import top.defaults.kotlinoverflow.util.isEmpty
 import top.defaults.kotlinoverflow.util.put
 
 object AccessToken {
-    private var _value: String? = ""
+    private var backValue: String? = ""
     var value: String
         get() {
-            if (_value.isEmpty()) {
+            if (backValue.isEmpty()) {
                 return App.preferences.getString(PREFS_KEY_ACCESS_TOKEN, "")
             }
-            return _value!!
+            return backValue!!
         }
         set(value) {
-            _value = value
+            backValue = value
             App.preferences.put(PREFS_KEY_ACCESS_TOKEN, value)
         }
 }

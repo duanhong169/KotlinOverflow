@@ -24,18 +24,18 @@ import top.defaults.kotlinoverflow.fragment.QuestionsFragment
 
 class MainActivity : BaseActivity() {
 
-    lateinit var loginItem: MenuItem
+    private lateinit var loginItem: MenuItem
     private var questionSortTypes: LinkedHashMap<String, String> = LinkedHashMap()
-    lateinit var drawerToggle: ActionBarDrawerToggle
+    private lateinit var drawerToggle: ActionBarDrawerToggle
     private var selectedSortType: String = App.preferences.getString(PREFS_KEY_QUESTION_SORT_TYPE, "votes")
 
     init {
-        questionSortTypes.put("activity", "Active")
-        questionSortTypes.put("votes", "Votes")
-        questionSortTypes.put("creation", "Newest")
-        questionSortTypes.put("hot", "Hot Today")
-        questionSortTypes.put("week", "Hot Weekly")
-        questionSortTypes.put("month", "Hot Monthly")
+        questionSortTypes["activity"] = "Active"
+        questionSortTypes["votes"] = "Votes"
+        questionSortTypes["creation"] = "Newest"
+        questionSortTypes["hot"] = "Hot Today"
+        questionSortTypes["week"] = "Hot Weekly"
+        questionSortTypes["month"] = "Hot Monthly"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,13 +82,13 @@ class MainActivity : BaseActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.login, menu)
         loginItem = menu!!.findItem(R.id.login)
-        App.userState.subscribe({
+        App.userState.subscribe {
             if (it == App.EVENT_LOGGED_IN) {
                 loginItem.title = getUser()?.displayName
             } else{
                 loginItem.setTitle(R.string.login)
             }
-        })
+        }
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -123,11 +123,11 @@ class MainActivity : BaseActivity() {
                 .appendQueryParameter("redirect_uri", "https://defaults.top/auth")
 
         val intent = WebViewActivity.buildIntent(this, uriBuilder.toString())
-        startActivityForObservable(intent).subscribe({
+        startActivityForObservable(intent).subscribe {
             if (it.isOk()) {
                 getUserInfo()
             }
-        })
+        }
     }
 
     private fun getUserInfo() {

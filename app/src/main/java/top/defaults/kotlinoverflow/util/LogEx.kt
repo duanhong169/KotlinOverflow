@@ -1,4 +1,6 @@
 @file:JvmName("LogUtils")
+@file:Suppress("unused")
+
 package top.defaults.kotlinoverflow.util
 
 import android.util.Log

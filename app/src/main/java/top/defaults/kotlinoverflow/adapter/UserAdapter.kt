@@ -1,12 +1,9 @@
 package top.defaults.kotlinoverflow.adapter
 
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import com.squareup.picasso.Picasso
 import top.defaults.kotlinoverflow.R
 import top.defaults.kotlinoverflow.model.User
-import top.defaults.kotlinoverflow.view.Badges
 import kotlinx.android.synthetic.main.item_user_brief.view.*
 
 class UserAdapter : BaseRecyclerViewAdapter<User>() {

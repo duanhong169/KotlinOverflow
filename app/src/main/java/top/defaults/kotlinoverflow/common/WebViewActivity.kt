@@ -14,7 +14,7 @@ class WebViewActivity : BaseActivity() {
     lateinit var webView: WebView
 
     companion object {
-        val EXTRA_URI = "extra_uri"
+        const val EXTRA_URI = "extra_uri"
 
         fun buildIntent(context: Context, url: String): Intent {
             val intent = Intent(context, WebViewActivity::class.java)
@@ -30,8 +30,8 @@ class WebViewActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
-        progressBar = findViewById(R.id.progressBar) as ProgressBar
-        webView = findViewById(R.id.webView) as WebView
+        progressBar = findViewById(R.id.progressBar)
+        webView = findViewById(R.id.webView)
         webView.configure(progressBar)
         val uri = intent.getStringExtra(EXTRA_URI)
         webView.loadUrl(uri)

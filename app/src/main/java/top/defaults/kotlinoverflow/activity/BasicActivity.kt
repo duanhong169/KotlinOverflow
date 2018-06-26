@@ -10,9 +10,9 @@ import top.defaults.kotlinoverflow.fragment.QuestionFragment
 class BasicActivity : BaseActivity() {
 
     companion object {
-        val EXTRA_FRAGMENT_ARGS = "extra_fragment_args"
-        val EXTRA_FRAGMENT_TYPE = "extra_fragment_type"
-        val FRAGMENT_TYPE_QUESTION = 1
+        const val EXTRA_FRAGMENT_ARGS = "extra_fragment_args"
+        const val EXTRA_FRAGMENT_TYPE = "extra_fragment_type"
+        const val FRAGMENT_TYPE_QUESTION = 1
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,11 +38,9 @@ class BasicActivity : BaseActivity() {
     }
 
     fun replace(fragmentType: Int, args: Bundle? = null) {
-        val fragment: BaseFragment?
-
-        when(fragmentType) {
-            FRAGMENT_TYPE_QUESTION -> fragment = QuestionFragment()
-            else -> fragment = null
+        val fragment: BaseFragment? = when(fragmentType) {
+            FRAGMENT_TYPE_QUESTION -> QuestionFragment()
+            else -> null
         }
 
         fragment?.let {

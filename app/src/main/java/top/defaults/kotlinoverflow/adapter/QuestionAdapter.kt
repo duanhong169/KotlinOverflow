@@ -42,7 +42,7 @@ class QuestionAdapter : BaseRecyclerViewAdapter<Question>() {
                 data.answerCount?.let { answerCount ->
                     var style = CountView.Style.NORMAL
                     if (data.acceptedAnswerId?:0 > 0) style = CountView.Style.FILL
-                    else if (data.isAnswered?:false) style = CountView.Style.STROKE
+                    else if (data.isAnswered == true) style = CountView.Style.STROKE
                     answers.setContent(answerCount.toString(), if (answerCount == 1) context.getString(R.string.answer) else context.getString(R.string.answer_plural), style)
                 }
 

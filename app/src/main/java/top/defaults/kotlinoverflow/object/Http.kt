@@ -9,7 +9,7 @@ import top.defaults.kotlinoverflow.BuildConfig
 import top.defaults.kotlinoverflow.util.addQueryParameterIfAbsent
 
 object Http {
-    val client: Retrofit by lazy {
+    private val client: Retrofit by lazy {
         Retrofit.Builder()
                 .baseUrl("https://api.stackexchange.com/2.2/")
                 .client(okHttpClient)
@@ -18,13 +18,13 @@ object Http {
                 .build()
     }
 
-    private var _okHttpClient: OkHttpClient? = null
+    private var backOkHttpClient: OkHttpClient? = null
 
-    val okHttpClient: OkHttpClient
+    private val okHttpClient: OkHttpClient
         get() {
-            if (_okHttpClient == null) {
-                val builder = OkHttpClient.Builder().addInterceptor({ chain ->
-                    var request = chain!!.request()
+            if (backOkHttpClient == null) {
+                val builder = OkHttpClient.Builder().addInterceptor { chain ->
+                    var request = chain.request()
                     val builder = request.url().newBuilder()
                             .addQueryParameter("key", BuildConfig.STACK_OVERFLOW_APP_KEY)
                             .addQueryParameterIfAbsent("site", "stackoverflow")
@@ -33,7 +33,7 @@ object Http {
                     val url = builder.build()
                     request = request.newBuilder().url(url).build()
                     chain.proceed(request)
-                })
+                }
 
                 if (BuildConfig.DEBUG) {
                     val logging = HttpLoggingInterceptor()
@@ -41,10 +41,10 @@ object Http {
                     builder.addInterceptor(logging)
                 }
 
-                _okHttpClient = builder.build()
+                backOkHttpClient = builder.build()
             }
 
-            return _okHttpClient!!
+            return backOkHttpClient!!
         }
 
     fun <T> create(api: Class<T>): T {

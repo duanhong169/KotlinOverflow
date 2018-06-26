@@ -46,13 +46,13 @@ class QuestionDetailAdapter : BaseRecyclerViewAdapter<QuestionDetailSection>() {
     }
 
     private fun get(itemView: View, viewType: Int): BaseRecyclerViewAdapter<QuestionDetailSection>.ViewHolder {
-        when(viewType) {
-            QuestionDetailSection.SECTION_TYPE_QUESTION_HEAD -> return QuestionHead(itemView)
-            QuestionDetailSection.SECTION_TYPE_QUESTION_BODY -> return QuestionBody(itemView)
-            QuestionDetailSection.SECTION_TYPE_QUESTION_TAIL -> return QuestionTail(itemView)
-            QuestionDetailSection.SECTION_TYPE_ANSWER_TITLE -> return AnswerTitle(itemView)
-            QuestionDetailSection.SECTION_TYPE_ANSWER -> return AnswerContainer(itemView)
-            else -> return QuestionHead(itemView)
+        return when(viewType) {
+            QuestionDetailSection.SECTION_TYPE_QUESTION_HEAD -> QuestionHead(itemView)
+            QuestionDetailSection.SECTION_TYPE_QUESTION_BODY -> QuestionBody(itemView)
+            QuestionDetailSection.SECTION_TYPE_QUESTION_TAIL -> QuestionTail(itemView)
+            QuestionDetailSection.SECTION_TYPE_ANSWER_TITLE -> AnswerTitle(itemView)
+            QuestionDetailSection.SECTION_TYPE_ANSWER -> AnswerContainer(itemView)
+            else -> QuestionHead(itemView)
         }
     }
 

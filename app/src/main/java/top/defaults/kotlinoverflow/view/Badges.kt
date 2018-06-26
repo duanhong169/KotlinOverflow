@@ -147,13 +147,13 @@ class Badges(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 
         }
     }
 
-    fun getBadgeBounds(x: Float, y: Float): RectF {
+    private fun getBadgeBounds(x: Float, y: Float): RectF {
         badgeBounds.set(internalMargin.toFloat(), ((lineHeight - badgeSize) / 2).toFloat(), (internalMargin + badgeSize).toFloat(), ((lineHeight + badgeSize) / 2).toFloat())
         badgeBounds.offset(x, y)
         return badgeBounds
     }
 
-    fun drawText(canvas: Canvas?, text: String, x: Float, y: Float) {
+    private fun drawText(canvas: Canvas?, text: String, x: Float, y: Float) {
         canvas?.drawText(text, x, y + (lineHeight + textPaint.textSize) / 2 - sp(2), textPaint)
     }
 }

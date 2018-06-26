@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package top.defaults.kotlinoverflow.common
 
 import android.app.Activity
@@ -10,10 +12,13 @@ import io.reactivex.subjects.BehaviorSubject
 import top.defaults.kotlinoverflow.model.ActivityResult
 
 abstract class BaseFragment : Fragment(), BaseView {
-    private var LIFE_CYCLE_EVENT_DESTROY = -1
-    private var LIFE_CYCLE_EVENT_INIT = 0
 
-    lateinit var activityResultManager: ActivityResultManager
+    companion object {
+        private const val LIFE_CYCLE_EVENT_DESTROY = -1
+        private const val LIFE_CYCLE_EVENT_INIT = 0
+    }
+
+    private lateinit var activityResultManager: ActivityResultManager
     private var lifeCycle: BehaviorSubject<Int> = BehaviorSubject.createDefault(LIFE_CYCLE_EVENT_INIT)
     private lateinit var progressDialog : ProgressDialog
 
@@ -44,7 +49,7 @@ abstract class BaseFragment : Fragment(), BaseView {
     }
 
     override fun destroyObservable(): Observable<Unit> {
-        return lifeCycle.filter({ it == LIFE_CYCLE_EVENT_DESTROY }).map { Unit }
+        return lifeCycle.filter { it == LIFE_CYCLE_EVENT_DESTROY }.map { Unit }
     }
 
     override fun onDestroyView() {

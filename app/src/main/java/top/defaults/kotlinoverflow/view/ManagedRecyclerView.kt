@@ -25,9 +25,9 @@ class ManagedRecyclerView(context: Context, attrs: AttributeSet? = null, defStyl
         LayoutInflater.from(context).inflate(R.layout.loading_footer, this, false) as TextView
     }
     var recyclerView: RecyclerView
-    var swipeRefreshLayout: SwipeRefreshLayout
+    private var swipeRefreshLayout: SwipeRefreshLayout
     var onRefreshListener: SwipeRefreshLayout.OnRefreshListener? = null
-    val colorAnimator: ObjectAnimator by lazy {
+    private val colorAnimator: ObjectAnimator by lazy {
         val animator = ObjectAnimator.ofInt(loadingFooter, "textColor", ContextCompat.getColor(context, R.color.colorPrimary), ContextCompat.getColor(context, R.color.colorAccent))
         animator.setEvaluator(ArgbEvaluator())
         animator.target = loadingFooter
@@ -61,7 +61,7 @@ class ManagedRecyclerView(context: Context, attrs: AttributeSet? = null, defStyl
 
     init {
         inflate(context, R.layout.managed_recycler_view, this)
-        recyclerView = findViewById(R.id.top_defaults_kotlinoverflow_view_ManagedRecyclerView_recyclerView) as RecyclerView
+        recyclerView = findViewById(R.id.top_defaults_kotlinoverflow_view_ManagedRecyclerView_recyclerView)
         val layoutManager = recyclerView.layoutManager
         if (layoutManager is GridLayoutManager) {
             val lookup = object : GridLayoutManager.SpanSizeLookup() {
@@ -71,7 +71,7 @@ class ManagedRecyclerView(context: Context, attrs: AttributeSet? = null, defStyl
             }
             layoutManager.spanSizeLookup = lookup
         }
-        swipeRefreshLayout = findViewById(R.id.top_defaults_kotlinoverflow_view_ManagedRecyclerView_swipeRefreshLayout) as SwipeRefreshLayout
+        swipeRefreshLayout = findViewById(R.id.top_defaults_kotlinoverflow_view_ManagedRecyclerView_swipeRefreshLayout)
         swipeRefreshLayout.setOnRefreshListener { onRefreshListener?.onRefresh() }
     }
 
@@ -92,7 +92,7 @@ class ManagedRecyclerView(context: Context, attrs: AttributeSet? = null, defStyl
                 if (status === Status.NORMAL) {
                     if (loadingFooterEnabled) {
                         loadingFooter.setText(R.string.click_to_load_more)
-                        loadingFooter.setOnClickListener({ notifyLoadMore() })
+                        loadingFooter.setOnClickListener { notifyLoadMore() }
                     }
                 }
                 return
@@ -148,7 +148,7 @@ class ManagedRecyclerView(context: Context, attrs: AttributeSet? = null, defStyl
                 Status.NORMAL -> {
                     if (isLoadingFooterFullVisible()) {
                         loadingFooter.setText(R.string.click_to_load_more)
-                        loadingFooter.setOnClickListener({ notifyLoadMore() })
+                        loadingFooter.setOnClickListener { notifyLoadMore() }
                     } else {
                         loadingFooter.setText(R.string.pull_to_load_more)
                     }
@@ -161,14 +161,14 @@ class ManagedRecyclerView(context: Context, attrs: AttributeSet? = null, defStyl
                 Status.ERROR -> {
                     loadingFooter.setText(R.string.loading_failed)
                     loadingFooter.setTextColor(ContextCompat.getColor(context, R.color.red))
-                    loadingFooter.setOnClickListener({ notifyLoadMore() })
+                    loadingFooter.setOnClickListener { notifyLoadMore() }
                 }
                 Status.DISMISS -> getExtendedAdapter().removeFooter()
             }
         }
     }
 
-    fun isLoadingFooterFullVisible(): Boolean {
+    private fun isLoadingFooterFullVisible(): Boolean {
         val layoutManager = recyclerView.layoutManager as LinearLayoutManager
         val lastVisibleItem = layoutManager.findLastCompletelyVisibleItemPosition()
         val totalItemCount = getExtendedAdapter().getDataSize()
