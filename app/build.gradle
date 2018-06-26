@@ -29,6 +29,11 @@ android {
             buildConfigField 'String', 'STACK_OVERFLOW_APP_KEY', '"bOoOtcwFjFbprZWiuNc69g(("'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
 }
 
 dependencies {
