@@ -4,7 +4,7 @@ import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import top.defaults.kotlinoverflow.model.QuestionList
+import top.defaults.kotlinoverflow.data.QuestionList
 import top.defaults.kotlinoverflow.util.DEF_PAGE_SIZE
 
 interface Questions {

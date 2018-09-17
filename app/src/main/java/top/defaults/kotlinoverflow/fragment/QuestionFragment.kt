@@ -11,9 +11,9 @@ import top.defaults.kotlinoverflow.`object`.Http
 import top.defaults.kotlinoverflow.adapter.BaseRecyclerViewAdapter
 import top.defaults.kotlinoverflow.adapter.QuestionDetailAdapter
 import top.defaults.kotlinoverflow.api.Questions
-import top.defaults.kotlinoverflow.model.Question
-import top.defaults.kotlinoverflow.model.QuestionDetailSection
-import top.defaults.kotlinoverflow.model.QuestionList
+import top.defaults.kotlinoverflow.data.Question
+import top.defaults.kotlinoverflow.data.QuestionDetailSection
+import top.defaults.kotlinoverflow.data.QuestionList
 import top.defaults.kotlinoverflow.util.unescapeHtml
 import top.defaults.kotlinoverflow.view.ManagedRecyclerView
 

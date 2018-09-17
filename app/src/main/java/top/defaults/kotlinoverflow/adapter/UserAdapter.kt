@@ -3,7 +3,7 @@ package top.defaults.kotlinoverflow.adapter
 import android.view.View
 import com.squareup.picasso.Picasso
 import top.defaults.kotlinoverflow.R
-import top.defaults.kotlinoverflow.model.User
+import top.defaults.kotlinoverflow.data.User
 import kotlinx.android.synthetic.main.item_user_brief.view.*
 
 class UserAdapter : BaseRecyclerViewAdapter<User>() {

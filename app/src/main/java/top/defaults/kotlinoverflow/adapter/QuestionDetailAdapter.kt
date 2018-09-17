@@ -9,9 +9,9 @@ import kotlinx.android.synthetic.main.question_body.view.*
 import kotlinx.android.synthetic.main.question_head.view.*
 import kotlinx.android.synthetic.main.question_tail.view.*
 import top.defaults.kotlinoverflow.R
-import top.defaults.kotlinoverflow.model.Answer
-import top.defaults.kotlinoverflow.model.QuestionDetailSection
-import top.defaults.kotlinoverflow.model.Question
+import top.defaults.kotlinoverflow.data.Answer
+import top.defaults.kotlinoverflow.data.QuestionDetailSection
+import top.defaults.kotlinoverflow.data.Question
 import top.defaults.kotlinoverflow.util.addOnPrefixIfNeeded
 import top.defaults.kotlinoverflow.util.configure
 import top.defaults.kotlinoverflow.util.loadWithCss

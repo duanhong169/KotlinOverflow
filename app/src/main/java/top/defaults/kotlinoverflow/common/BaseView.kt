@@ -6,7 +6,7 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import io.reactivex.Observable
-import top.defaults.kotlinoverflow.model.ActivityResult
+import top.defaults.kotlinoverflow.data.ActivityResult
 import android.app.Activity
 import android.os.Bundle
 import top.defaults.kotlinoverflow.activity.BasicActivity

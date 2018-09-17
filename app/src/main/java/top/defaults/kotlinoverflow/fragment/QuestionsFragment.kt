@@ -14,8 +14,8 @@ import top.defaults.kotlinoverflow.adapter.BaseRecyclerViewAdapter
 import top.defaults.kotlinoverflow.adapter.QuestionAdapter
 import top.defaults.kotlinoverflow.api.Questions
 import top.defaults.kotlinoverflow.common.listener.OnItemClickListener
-import top.defaults.kotlinoverflow.model.Question
-import top.defaults.kotlinoverflow.model.QuestionList
+import top.defaults.kotlinoverflow.data.Question
+import top.defaults.kotlinoverflow.data.QuestionList
 import top.defaults.kotlinoverflow.view.ManagedRecyclerView
 
 class QuestionsFragment : RecyclerViewFragment<Question, QuestionList>() {

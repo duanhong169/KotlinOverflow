@@ -1,4 +1,4 @@
-package top.defaults.kotlinoverflow.model
+package top.defaults.kotlinoverflow.data
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -6,10 +6,10 @@ import com.google.gson.annotations.SerializedName
 
 data class Question(
 
-	@field:SerializedName("score")
+    @field:SerializedName("score")
 	val score: Int? = null,
 
-	@field:SerializedName("link")
+    @field:SerializedName("link")
 	val link: String? = null,
 
     @field:SerializedName("share_link")
@@ -24,37 +24,37 @@ data class Question(
     @field:SerializedName("owner")
 	val owner: ShallowUser? = null,
 
-	@field:SerializedName("last_editor")
+    @field:SerializedName("last_editor")
 	val lastEditor: ShallowUser? = null,
 
-	@field:SerializedName("is_answered")
+    @field:SerializedName("is_answered")
 	val isAnswered: Boolean? = null,
 
-	@field:SerializedName("accepted_answer_id")
+    @field:SerializedName("accepted_answer_id")
 	val acceptedAnswerId: Int? = null,
 
-	@field:SerializedName("creation_date")
+    @field:SerializedName("creation_date")
 	val creationDate: Int? = null,
 
-	@field:SerializedName("up_vote_count")
+    @field:SerializedName("up_vote_count")
 	val upVoteCount: Int? = null,
 
-	@field:SerializedName("answer_count")
+    @field:SerializedName("answer_count")
 	val answerCount: Int? = null,
 
-	@field:SerializedName("title")
+    @field:SerializedName("title")
 	val title: String? = null,
 
-	@field:SerializedName("body")
+    @field:SerializedName("body")
 	val body: String? = null,
 
-	@field:SerializedName("question_id")
+    @field:SerializedName("question_id")
 	val questionId: Int? = null,
 
-	@field:SerializedName("view_count")
+    @field:SerializedName("view_count")
 	val viewCount: Int? = null,
 
-	@field:SerializedName("tags")
+    @field:SerializedName("tags")
 	val tags: List<String?>? = null,
 
     @field:SerializedName("comment_count")

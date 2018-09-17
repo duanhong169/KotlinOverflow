@@ -3,7 +3,7 @@ package top.defaults.kotlinoverflow.api
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query
-import top.defaults.kotlinoverflow.model.UserList
+import top.defaults.kotlinoverflow.data.UserList
 import top.defaults.kotlinoverflow.`object`.AccessToken
 import top.defaults.kotlinoverflow.util.DEF_PAGE_SIZE
 

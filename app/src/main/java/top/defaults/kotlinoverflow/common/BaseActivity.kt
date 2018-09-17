@@ -11,7 +11,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.inputmethod.InputMethodManager
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
-import top.defaults.kotlinoverflow.model.ActivityResult
+import top.defaults.kotlinoverflow.data.ActivityResult
 
 abstract class BaseActivity : AppCompatActivity(), BaseView {
 

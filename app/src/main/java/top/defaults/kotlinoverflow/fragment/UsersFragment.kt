@@ -8,8 +8,8 @@ import top.defaults.kotlinoverflow.adapter.UserAdapter
 import top.defaults.kotlinoverflow.api.Users
 import top.defaults.kotlinoverflow.view.ManagedRecyclerView
 import top.defaults.kotlinoverflow.adapter.BaseRecyclerViewAdapter
-import top.defaults.kotlinoverflow.model.User
-import top.defaults.kotlinoverflow.model.UserList
+import top.defaults.kotlinoverflow.data.User
+import top.defaults.kotlinoverflow.data.UserList
 
 class UsersFragment : RecyclerViewFragment<User, UserList>() {
     private val adapter: UserAdapter by lazy {

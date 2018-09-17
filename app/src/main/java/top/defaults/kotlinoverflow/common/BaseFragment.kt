@@ -9,7 +9,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
-import top.defaults.kotlinoverflow.model.ActivityResult
+import top.defaults.kotlinoverflow.data.ActivityResult
 
 abstract class BaseFragment : Fragment(), BaseView {
 

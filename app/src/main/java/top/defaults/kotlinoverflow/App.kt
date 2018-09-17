@@ -9,7 +9,7 @@ import com.google.gson.GsonBuilder
 import com.squareup.picasso.LruCache
 import com.squareup.picasso.Picasso
 import io.reactivex.subjects.BehaviorSubject
-import top.defaults.kotlinoverflow.model.User
+import top.defaults.kotlinoverflow.data.User
 import top.defaults.kotlinoverflow.util.*
 
 class App : Application() {

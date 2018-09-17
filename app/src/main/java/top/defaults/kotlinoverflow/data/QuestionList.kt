@@ -1,4 +1,4 @@
-package top.defaults.kotlinoverflow.model
+package top.defaults.kotlinoverflow.data
 
 import com.google.gson.annotations.SerializedName
 
