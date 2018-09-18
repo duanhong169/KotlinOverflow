@@ -7,7 +7,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import okhttp3.HttpUrl
-import org.apache.commons.lang3.StringEscapeUtils
+import org.apache.commons.text.StringEscapeUtils
 import top.defaults.kotlinoverflow.App
 import top.defaults.kotlinoverflow.common.ActivityFragmentCommons
 import java.text.NumberFormat
