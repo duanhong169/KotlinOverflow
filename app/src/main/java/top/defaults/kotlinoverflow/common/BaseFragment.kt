@@ -9,9 +9,9 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
-import top.defaults.kotlinoverflow.data.ActivityResult
+import top.defaults.kotlinoverflow.data.resp.ActivityResult
 
-abstract class BaseFragment : Fragment(), BaseView {
+abstract class BaseFragment : Fragment(), ActivityFragmentCommons {
 
     companion object {
         private const val LIFE_CYCLE_EVENT_DESTROY = -1

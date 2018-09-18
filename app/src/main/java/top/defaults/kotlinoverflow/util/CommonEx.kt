@@ -9,7 +9,7 @@ import io.reactivex.subjects.BehaviorSubject
 import okhttp3.HttpUrl
 import org.apache.commons.lang3.StringEscapeUtils
 import top.defaults.kotlinoverflow.App
-import top.defaults.kotlinoverflow.common.BaseView
+import top.defaults.kotlinoverflow.common.ActivityFragmentCommons
 import java.text.NumberFormat
 
 const val PREFS_KEY_ACCESS_TOKEN = "access_token"
@@ -52,7 +52,7 @@ fun <T> SharedPreferences.getAny(key: String, classOfT: Class<T>): T {
     return App.gson.fromJson<T>(getString(key, ""), classOfT)
 }
 
-fun <T> Observable<T>.android(view: BaseView? = null): Observable<T> {
+fun <T> Observable<T>.android(view: ActivityFragmentCommons? = null): Observable<T> {
     val observable = this
     if (view != null) {
         observable.takeUntil(view.destroyObservable())
@@ -60,14 +60,14 @@ fun <T> Observable<T>.android(view: BaseView? = null): Observable<T> {
     return observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
 }
 
-fun <T> Observable<T>.showProgressDialog(view: BaseView, message: CharSequence? = "正在加载..."): Observable<T> {
+fun <T> Observable<T>.showProgressDialog(view: ActivityFragmentCommons, message: CharSequence? = "正在加载..."): Observable<T> {
     val dismissObservable = BehaviorSubject.create<Unit>()
     return doOnLifecycle({
         view.showProgressDialog(message).setOnCancelListener { dismissObservable.onNext(Unit) }
     }, {
         view.dismissProgressDialog()
-    }).doOnComplete({ view.dismissProgressDialog() })
-            .doOnError({ view.dismissProgressDialog() })
+    }).doOnComplete { view.dismissProgressDialog() }
+            .doOnError { view.dismissProgressDialog() }
             .takeUntil(dismissObservable)
 }
 

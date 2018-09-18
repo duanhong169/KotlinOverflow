@@ -3,7 +3,7 @@ package top.defaults.kotlinoverflow.adapter
 import android.text.format.DateUtils
 import android.view.View
 import top.defaults.kotlinoverflow.R
-import top.defaults.kotlinoverflow.data.Question
+import top.defaults.kotlinoverflow.data.resp.Question
 import kotlinx.android.synthetic.main.item_question_brief.view.*
 import top.defaults.kotlinoverflow.util.reputationAbbrev
 import java.util.*

@@ -10,7 +10,7 @@ object AccessToken {
     var value: String
         get() {
             if (backValue.isEmpty()) {
-                return App.preferences.getString(PREFS_KEY_ACCESS_TOKEN, "")
+                return App.preferences.getString(PREFS_KEY_ACCESS_TOKEN, "") ?: ""
             }
             return backValue!!
         }

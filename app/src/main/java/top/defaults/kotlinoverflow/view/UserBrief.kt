@@ -6,7 +6,7 @@ import android.widget.RelativeLayout
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.user_brief.view.*
 import top.defaults.kotlinoverflow.R
-import top.defaults.kotlinoverflow.data.ShallowUser
+import top.defaults.kotlinoverflow.data.resp.ShallowUser
 import top.defaults.kotlinoverflow.util.reputationAbbrev
 import top.defaults.kotlinoverflow.util.unescapeHtml
 

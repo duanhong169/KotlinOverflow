@@ -3,7 +3,7 @@ package top.defaults.kotlinoverflow.common
 import java.util.concurrent.atomic.AtomicInteger
 import android.util.SparseArray
 import io.reactivex.Observable
-import top.defaults.kotlinoverflow.data.ActivityResult
+import top.defaults.kotlinoverflow.data.resp.ActivityResult
 import android.app.Activity
 import android.support.v4.app.Fragment
 import android.content.Intent

@@ -11,9 +11,9 @@ import android.support.v7.app.AppCompatActivity
 import android.view.inputmethod.InputMethodManager
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
-import top.defaults.kotlinoverflow.data.ActivityResult
+import top.defaults.kotlinoverflow.data.resp.ActivityResult
 
-abstract class BaseActivity : AppCompatActivity(), BaseView {
+abstract class BaseActivity : AppCompatActivity(), ActivityFragmentCommons {
 
     companion object {
         private const val LIFE_CYCLE_EVENT_DESTROY = -1
