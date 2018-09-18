@@ -1,4 +1,4 @@
-package top.defaults.kotlinoverflow.common;
+package top.defaults.kotlinoverflow.common
 
 interface BaseView<T> : ActivityFragmentCommons {
 

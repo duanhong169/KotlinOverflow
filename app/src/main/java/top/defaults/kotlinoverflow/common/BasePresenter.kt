@@ -1,4 +1,4 @@
-package top.defaults.kotlinoverflow.common;
+package top.defaults.kotlinoverflow.common
 
 import android.support.annotation.CallSuper
 import io.reactivex.disposables.CompositeDisposable

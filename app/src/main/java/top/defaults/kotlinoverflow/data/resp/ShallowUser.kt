@@ -27,6 +27,7 @@ data class ShallowUser(
     @field:SerializedName("display_name")
 	val displayName: String? = null
 ) : Parcelable {
+	@Suppress("unused")
 	companion object {
 		@JvmField val CREATOR: Parcelable.Creator<ShallowUser> = object : Parcelable.Creator<ShallowUser> {
 			override fun createFromParcel(source: Parcel): ShallowUser = ShallowUser(source)

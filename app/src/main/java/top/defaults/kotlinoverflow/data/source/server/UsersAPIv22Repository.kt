@@ -1,11 +1,12 @@
-package top.defaults.kotlinoverflow.data.source
+package top.defaults.kotlinoverflow.data.source.server
 
 import io.reactivex.Observable
 import top.defaults.kotlinoverflow.`object`.Http
 import top.defaults.kotlinoverflow.data.param.UserQueryParams
 import top.defaults.kotlinoverflow.data.param.UsersQueryParams
 import top.defaults.kotlinoverflow.data.resp.UserList
-import top.defaults.kotlinoverflow.data.source.retrofit.UsersApi
+import top.defaults.kotlinoverflow.data.source.UsersRepository
+import top.defaults.kotlinoverflow.data.source.server.retrofit.UsersApi
 import top.defaults.kotlinoverflow.util.SingletonHolder
 
 class UsersAPIv22Repository: UsersRepository {

@@ -15,6 +15,7 @@ data class BadgeCounts(
 	@field:SerializedName("bronze")
 	val bronze: Int? = null
 ) : Parcelable {
+	@Suppress("unused")
 	companion object {
 		@JvmField val CREATOR: Parcelable.Creator<BadgeCounts> = object : Parcelable.Creator<BadgeCounts> {
 			override fun createFromParcel(source: Parcel): BadgeCounts = BadgeCounts(source)

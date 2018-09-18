@@ -82,12 +82,12 @@ abstract class BaseRecyclerViewAdapter<T> : RecyclerView.Adapter<BaseRecyclerVie
         notifyItemInserted(0)
     }
 
-    fun removeHeader() {
+    private fun removeHeader() {
         notifyItemRemoved(0)
         headerView = null
     }
 
-    fun getHeaderCount(): Int {
+    private fun getHeaderCount(): Int {
         return if (headerView != null) 1 else 0
     }
 
@@ -104,11 +104,11 @@ abstract class BaseRecyclerViewAdapter<T> : RecyclerView.Adapter<BaseRecyclerVie
         footerView = null
     }
 
-    fun getFooterCount(): Int {
+    private fun getFooterCount(): Int {
         return if (footerView != null) 1 else 0
     }
 
-    fun getItemPosition(position: Int): Int {
+    private fun getItemPosition(position: Int): Int {
         return position - getHeaderCount()
     }
 

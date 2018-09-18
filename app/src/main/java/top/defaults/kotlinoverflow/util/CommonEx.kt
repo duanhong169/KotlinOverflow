@@ -62,7 +62,7 @@ fun <T> Observable<T>.android(view: ActivityFragmentCommons? = null): Observable
 
 fun <T> Observable<T>.showProgressDialog(view: ActivityFragmentCommons, message: CharSequence? = "正在加载..."): Observable<T> {
     val dismissObservable = BehaviorSubject.create<Unit>()
-    return doOnLifecycle({
+    return doOnLifecycle({ _ ->
         view.showProgressDialog(message).setOnCancelListener { dismissObservable.onNext(Unit) }
     }, {
         view.dismissProgressDialog()

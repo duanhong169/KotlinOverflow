@@ -1,11 +1,12 @@
-package top.defaults.kotlinoverflow.data.source
+package top.defaults.kotlinoverflow.data.source.server
 
 import io.reactivex.Observable
 import top.defaults.kotlinoverflow.`object`.Http
 import top.defaults.kotlinoverflow.data.param.QuestionQueryParams
 import top.defaults.kotlinoverflow.data.param.QuestionsQueryParams
 import top.defaults.kotlinoverflow.data.resp.QuestionList
-import top.defaults.kotlinoverflow.data.source.retrofit.QuestionsApi
+import top.defaults.kotlinoverflow.data.source.QuestionsRepository
+import top.defaults.kotlinoverflow.data.source.server.retrofit.QuestionsApi
 import top.defaults.kotlinoverflow.util.SingletonHolder
 
 class QuestionsAPIv22Repository: QuestionsRepository {

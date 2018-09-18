@@ -8,7 +8,7 @@ import top.defaults.kotlinoverflow.BuildConfig
 import java.util.*
 
 private val printLog = BuildConfig.DEBUG
-private val TAG = "LogUtils"
+private const val TAG = "LogUtils"
 
 fun Any.logV(format: String, vararg args: Any) {
     if (!printLog) {
@@ -46,13 +46,13 @@ fun Any.logE(format: String, vararg args: Any) {
 }
 
 private fun buildMessage(format: String, vararg args: Any): String {
-    try {
+    return try {
         val msg = String.format(Locale.ENGLISH, format, *args)
         val log = StringBuilder(getMethod(1))
         log.append(" ").append(msg)
-        return log.toString()
+        log.toString()
     } catch (e: Exception) {
-        return format + Arrays.toString(args)
+        format + Arrays.toString(args)
     }
 }
 

@@ -66,6 +66,7 @@ data class Question(
     @field:SerializedName("answers")
     val answers: List<Answer?>? = null
 ) : Parcelable {
+	@Suppress("unused")
 	companion object {
 		@JvmField val CREATOR: Parcelable.Creator<Question> = object : Parcelable.Creator<Question> {
 			override fun createFromParcel(source: Parcel): Question = Question(source)

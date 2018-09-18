@@ -64,7 +64,7 @@ class QuestionDetailAdapter : BaseRecyclerViewAdapter<QuestionDetailSection>() {
 
         override fun bind(data: QuestionDetailSection) {
             val question = data.get<Question>()
-            question?.let {
+            question?.let { _ ->
                 question.score?.let {
                     vote.set(question.score)
                 }
@@ -100,7 +100,7 @@ class QuestionDetailAdapter : BaseRecyclerViewAdapter<QuestionDetailSection>() {
         @SuppressLint("SetTextI18n")
         override fun bind(data: QuestionDetailSection) {
             val question = data.get<Question>()
-            question?.let {
+            question?.let { _ ->
                 question.creationDate?.let {
                     creationTime.text = "Asked " + DateUtils.getRelativeTimeSpanString(question.creationDate.toLong() * 1000).addOnPrefixIfNeeded()
                 }
@@ -144,7 +144,7 @@ class QuestionDetailAdapter : BaseRecyclerViewAdapter<QuestionDetailSection>() {
         @SuppressLint("SetTextI18n")
         override fun bind(data: QuestionDetailSection) {
             val answer = data.get<Answer>()
-            answer?.let {
+            answer?.let { _ ->
                 answer.score?.let {
                     vote.set(answer.score)
                 }

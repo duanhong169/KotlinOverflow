@@ -5,11 +5,11 @@ import kotlin.reflect.KClass
 class QuestionDetailSection(val type: Int, val data: Any?) {
 
     companion object {
-        val SECTION_TYPE_QUESTION_HEAD = 1
-        val SECTION_TYPE_QUESTION_BODY = 2
-        val SECTION_TYPE_QUESTION_TAIL = 3
-        val SECTION_TYPE_ANSWER_TITLE = 4
-        val SECTION_TYPE_ANSWER = 5
+        const val SECTION_TYPE_QUESTION_HEAD = 1
+        const val SECTION_TYPE_QUESTION_BODY = 2
+        const val SECTION_TYPE_QUESTION_TAIL = 3
+        const val SECTION_TYPE_ANSWER_TITLE = 4
+        const val SECTION_TYPE_ANSWER = 5
     }
 
     init {

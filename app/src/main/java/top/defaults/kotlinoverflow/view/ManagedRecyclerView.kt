@@ -113,6 +113,7 @@ class ManagedRecyclerView(context: Context, attrs: AttributeSet? = null, defStyl
         return loadingFooter
     }
 
+    @Suppress("unused")
     fun disableLoadingFooterTextView() {
         loadingFooterEnabled = false
         recyclerView.removeOnScrollListener(autoLoadMoreOnScrollListener)

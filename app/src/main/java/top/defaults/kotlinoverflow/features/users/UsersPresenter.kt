@@ -5,14 +5,11 @@ import top.defaults.kotlinoverflow.common.recyclerview.RecyclerViewPresenter
 import top.defaults.kotlinoverflow.data.resp.UserList
 import top.defaults.kotlinoverflow.data.source.UsersRepository
 
-class UsersPresenter : RecyclerViewPresenter<UserList> {
+class UsersPresenter(private var repository: UsersRepository,
+                     private var usersView: UsersContract.View)
+    : RecyclerViewPresenter<UserList>(usersView) {
 
-    private var repository: UsersRepository
-    private var usersView: UsersContract.View
-
-    constructor(repository: UsersRepository, usersView: UsersContract.View) : super(usersView) {
-        this.repository = repository
-        this.usersView = usersView
+    init {
         usersView.setPresenter(this)
     }
 

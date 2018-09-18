@@ -17,10 +17,10 @@ import top.defaults.kotlinoverflow.view.ManagedRecyclerView
 abstract class RecyclerViewFragment<E, C> : BaseFragment(), RecyclerViewContract.View<C> {
 
     lateinit var managedRecyclerView: ManagedRecyclerView
-    lateinit var recyclerViewPresenter: RecyclerViewContract.Presenter<C>
+    private lateinit var presenter: RecyclerViewContract.Presenter<C>
 
     override fun setPresenter(presenter: RecyclerViewContract.Presenter<C>) {
-        recyclerViewPresenter = presenter
+        this.presenter = presenter
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -56,7 +56,7 @@ abstract class RecyclerViewFragment<E, C> : BaseFragment(), RecyclerViewContract
             managedRecyclerView.paging.reset()
         }
         managedRecyclerView.setStatus(ManagedRecyclerView.Status.LOADING)
-        recyclerViewPresenter.load(append, Consumer { it ->
+        presenter.load(append, Consumer { it ->
             managedRecyclerView.setStatus(ManagedRecyclerView.Status.ERROR)
             managedRecyclerView.paging.page = currentPageIndex
             toast(it.toString())

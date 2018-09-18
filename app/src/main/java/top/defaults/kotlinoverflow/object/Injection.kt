@@ -1,9 +1,9 @@
 package top.defaults.kotlinoverflow.`object`
 
 import android.content.Context
-import top.defaults.kotlinoverflow.data.source.QuestionsAPIv22Repository
+import top.defaults.kotlinoverflow.data.source.server.QuestionsAPIv22Repository
 import top.defaults.kotlinoverflow.data.source.QuestionsRepository
-import top.defaults.kotlinoverflow.data.source.UsersAPIv22Repository
+import top.defaults.kotlinoverflow.data.source.server.UsersAPIv22Repository
 import top.defaults.kotlinoverflow.data.source.UsersRepository
 
 object Injection {

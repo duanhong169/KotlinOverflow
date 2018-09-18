@@ -1,4 +1,4 @@
-package top.defaults.kotlinoverflow.data.source.retrofit
+package top.defaults.kotlinoverflow.data.source.server.retrofit
 
 import io.reactivex.Observable
 import retrofit2.http.GET

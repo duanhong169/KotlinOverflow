@@ -27,6 +27,7 @@ class App : Application() {
             PreferenceManager.getDefaultSharedPreferences(appContext)
         }
         val gson = Gson()
+        @Suppress("unused")
         val prettyGson = GsonBuilder().setPrettyPrinting().create()!!
 
         fun getUser(): User? {
